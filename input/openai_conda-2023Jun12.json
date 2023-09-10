@@ -1,0 +1,482 @@
+[
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Removes unused packages and caches in the conda environment.",
+        "api_name": "clean",
+        "api_call": "conda clean [OPTIONS]",
+        "api_arguments": [
+          {"-a, --all": "Remove index cache, lock files, unused cache packages, tarballs, and logfiles."},
+          {"-i, --index-cache": "Remove index cache."},
+          {"-p, --packages": "Remove unused packages from writable package caches."},
+          {"-t, --tarballs": "Remove cached package tarballs."},
+          {"-f, --force-pkgs-dirs": "Remove all writable package caches."},
+          {"-c, --tempfiles": "Remove temporary files."},
+          {"-l, --logfiles": "Remove log files."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."},
+          {"-d, --dry-run": "Only display what would have been done."},
+          {"-y, --yes": "Sets any confirmation values to 'yes' automatically."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that allows users to remove unnecessary files and packages, clean up caches and manage output and flow control."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Compares packages between conda environments.",
+        "api_name": "compare",
+        "api_call": "conda compare [OPTIONS] file",
+        "api_arguments": [
+          {"file": "Path to the environment file that is to be compared against."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."},
+          {"-n, --name": "Name of environment."},
+          {"-p, --prefix": "Full path to environment location (i.e. prefix)."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that allows users to compare packages between different conda environments."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Modifies configuration values in .condarc. Modeled after the git config command.",
+        "api_name": "config",
+        "api_call": "conda config [OPTIONS]",
+        "api_arguments": [
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."},
+          {"--system": "Write to the system .condarc file."},
+          {"--env": "Write to the active conda environment .condarc file."},
+          {"--file": "Write to the given file."},
+          {"--show": "Display configuration values."},
+          {"--show-sources": "Display all identified configuration sources."},
+          {"--validate": "Validate all configuration sources."},
+          {"--describe": "Describe given configuration parameters."},
+          {"--write-default": "Write the default configuration to a file."},
+          {"--get": "Get a configuration value."},
+          {"--append": "Add one configuration value to the end of a list key."},
+          {"--prepend, --add": "Add one configuration value to the beginning of a list key."},
+          {"--set": "Set a boolean or string key."},
+          {"--remove": "Remove a configuration value from a list key."},
+          {"--remove-key": "Remove a configuration key (and all its values)."},
+          {"--stdin": "Apply configuration information given in yaml format piped through stdin."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that allows users to modify configuration values in .condarc file. This function is modelled after the git config command."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Creates a new conda environment from a list of specified packages.",
+        "api_name": "create",
+        "api_call": "conda create [OPTIONS] [package_spec ...]",
+        "api_arguments": [
+          {"package_spec": "List of packages to install or update in the conda environment."},
+          {"--clone": "Create a new environment as a copy of an existing local environment."},
+          {"--file": "Read package versions from the given file. Repeated file specifications can be passed."},
+          {"--dev": "Use sys.executable -m conda in wrapper scripts instead of CONDA_EXE."},
+          {"-n, --name": "Name of environment."},
+          {"-p, --prefix": "Full path to environment location."},
+          {"-c, --channel": "Additional channel to search for packages."},
+          {"--use-local": "Use locally built packages."},
+          {"--override-channels": "Do not search default or .condarc channels. Requires --channel."},
+          {"--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups."},
+          {"--experimental": "Download incremental package index data from repodata.jlap; implies 'lock'. lock: use locking when reading, updating index (repodata.json) cache."},
+          {"--strict-channel-priority": "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."},
+          {"--no-channel-priority": "Package version takes precedence over channel priority."},
+          {"--no-deps": "Do not install, update, remove, or change dependencies."},
+          {"--only-deps": "Only install dependencies."},
+          {"--no-pin": "Ignore pinned file."},
+          {"--no-default-packages": "Ignore create_default_packages in the .condarc file."},
+          {"--solver": "Choose which solver backend to use."},
+          {"--experimental-solver": "Possible choices: classic"},
+          {"--copy": "Install all packages using copies instead of hard- or soft-linking."},
+          {"-C, --use-index-cache": "Use cache of channel index files, even if it has expired."},
+          {"-k, --insecure": "Allow conda to perform 'insecure' SSL connections and transfers."},
+          {"--offline": "Offline mode. Don't connect to the Internet."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."},
+          {"-d, --dry-run": "Only display what would have been done."},
+          {"-y, --yes": "Sets any confirmation values to 'yes' automatically."},
+          {"--download-only": "Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix."},
+          {"--show-channel-urls": "Show channel urls."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that allows users to create a new conda environment from a list of specified packages."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Displays information about the current conda installation.",
+        "api_name": "info",
+        "api_call": "conda info [OPTIONS]",
+        "api_arguments": [
+          {"-a, --all": "Show all information."},
+          {"--base": "Display base environment path."},
+          {"-e, --envs": "List all known conda environments."},
+          {"-s, --system": "List environment variables."},
+          {"--unsafe-channels": "Display list of channels with tokens exposed."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that displays information about the current conda installation."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Initializes conda for shell interaction.",
+        "api_name": "init",
+        "api_call": "conda init [OPTIONS] [SHELLS ...]",
+        "api_arguments": [
+          {"SHELLS": "One or more shells to be initialized. If not given, the default value is 'bash' on unix and 'cmd.exe' & 'powershell' on Windows. Use the '--all' flag to initialize all shells. Available shells: ['bash', 'fish', 'powershell', 'tcsh', 'xonsh', 'zsh']"},
+          {"--all": "Initialize all currently available shells."},
+          {"-d, --dry-run": "Only display what would have been done."},
+          {"--user": "Initialize conda for the current user (default)."},
+          {"--no-user": "Don't initialize conda for the current user."},
+          {"--system": "Initialize conda for all users on the system."},
+          {"--reverse": "Undo effects of last conda init."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "A command line interface function in conda that initializes conda for shell interaction."
+        }
+    },
+    {
+        "domain": "Data Science",
+        "framework": "conda",
+        "functionality": "Installs a list of packages into a specified conda environment.",
+        "api_name": "install",
+        "api_call": "conda install [OPTIONS] [package_spec ...]",
+        "api_arguments": [
+          {"package_spec": "List of packages to install or update in the conda environment."},
+          {"--revision": "Revert to the specified REVISION."},
+          {"--file": "Read package versions from the given file. Repeated file specifications can be passed."},
+          {"--dev": "Use sys.executable -m conda in wrapper scripts instead of CONDA_EXE. Mainly for use during tests."},
+          {"-n, --name": "Name of environment."},
+          {"-p, --prefix": "Full path to environment location (i.e. prefix)."},
+          {"-c, --channel": "Additional channel to search for packages."},
+          {"--use-local": "Use locally built packages."},
+          {"--override-channels": "Do not search default or .condarc channels."},
+          {"--repodata-fn": "Specify file name of repodata on the remote server."},
+          {"--experimental": "Possible choices: jlap, lock."},
+          {"--strict-channel-priority": "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."},
+          {"--no-channel-priority": "Package version takes precedence over channel priority."},
+          {"--no-deps": "Do not install, update, remove, or change dependencies."},
+          {"--only-deps": "Only install dependencies."},
+          {"--no-pin": "Ignore pinned file."},
+          {"--solver": "Choose which solver backend to use."},
+          {"--experimental-solver": "Pending deprecation, use --solver instead."},
+          {"--force-reinstall": "Ensure that any user-requested package for the current operation is uninstalled and reinstalled."},
+          {"--freeze-installed, --no-update-deps": "Do not update or change already-installed dependencies."},
+          {"--update-deps": "Update dependencies that have available updates."},
+          {"-S, --satisfied-skip-solve": "Exit early and do not run the solver if the requested specs are satisfied."},
+          {"--update-all, --all": "Update all installed packages in the environment."},
+          {"--update-specs": "Update based on provided specifications."},
+          {"--copy": "Install all packages using copies instead of hard- or soft-linking."},
+          {"-m, --mkdir": "Create the environment directory, if necessary."},
+          {"--clobber": "Allow clobbering of overlapping file paths."},
+          {"-C, --use-index-cache": "Use cache of channel index files, even if it has expired."},
+          {"-k, --insecure": "Allow conda to perform 'insecure' SSL connections and transfers."},
+          {"--offline": "Offline mode."},
+          {"--json": "Report all output as json."},
+          {"-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."},
+          {"-q, --quiet": "Do not display progress bar."},
+          {"-d, --dry-run": "Only display what would have been done."},
+          {"-y, --yes": "Sets any confirmation values to 'yes' automatically."},
+          {"--download-only": "Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix."},
+          {"--show-channel-urls": "Show channel urls."}
+        ],
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda install' command is used to install a list of packages into a specified conda environment. The command can also be customized with several options to suit the needs of the user."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "List installed packages in a conda environment",
+        "api_name": "conda list",
+        "api_call": "conda list",
+        "api_arguments": {
+          "regex": "List only packages matching this regular expression.",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix).",
+          "--show-channel-urls": "Show channel urls. Overrides the value given by conda config --show show_channel_urls.",
+          "--reverse": "List installed packages in reverse order.",
+          "-c, --canonical": "Output canonical names of packages only.",
+          "-f, --full-name": "Only search for full names, i.e., ^<regex>$.",
+          "--explicit": "List explicitly all installed conda packages with URL (output may be used by conda create --file).",
+          "--md5": "Add MD5 hashsum when using --explicit.",
+          "-e, --export": "Output explicit, machine-readable requirement strings instead of human-readable lists of packages.",
+          "-r, --revisions": "List the revision history.",
+          "--no-pip": "Do not include pip-only installed packages.",
+          "--json": "Report all output as json. Suitable for using conda programmatically.",
+          "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.",
+          "-q, --quiet": "Do not display progress bar."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda list' command is used to list all installed packages in a specified conda environment. It provides several options to filter and format the output."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Retrieves latest channel notifications",
+        "api_name": "conda notices",
+        "api_call": "conda notices",
+        "api_arguments": {
+          "-c, --channel": "Additional channel to search for packages.",
+          "--use-local": "Use locally built packages. Identical to '-c local'.",
+          "--override-channels": "Do not search default or .condarc channels. Requires --channel.",
+          "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups.",
+          "--experimental": "Possible choices: jlap, lock. jlap: Download incremental package index data from repodata.jlap; implies 'lock'. lock: use locking when reading, updating index (repodata.json) cache."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda notices' command is used to retrieve the latest notifications from conda channels. Channel maintainers can set messages that will be shown to users intermittently, which may contain important information or updates about the stability of the channel."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Provides low-level conda package utility",
+        "api_name": "conda package",
+        "api_call": "conda package",
+        "api_arguments": {
+          "-w, --which": "Given some file's PATH, print which conda package the file came from.",
+          "-r, --reset": "Remove all untracked files and exit.",
+          "-u, --untracked": "Display all untracked files and exit.",
+          "--pkg-name": "Designate package name of the package being created.",
+          "--pkg-version": "Designate package version of the package being created.",
+          "--pkg-build": "Designate package build number of the package being created.",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix)."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda package' command provides low-level utility operations for conda packages. It allows the user to identify the origin of a file, to reset or display untracked files, and to define details about a package being created."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Removes packages from a specified conda environment",
+        "api_name": "conda remove",
+        "api_call": "conda remove [package_name]",
+        "api_arguments": {
+          "package_name": "Package names to remove from the environment.",
+          "--dev": "Use sys.executable -m conda in wrapper scripts instead of CONDA_EXE.",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix).",
+          "-c, --channel": "Additional channel to search for packages.",
+          "--use-local": "Use locally built packages. Identical to '-c local'.",
+          "--override-channels": "Do not search default or .condarc channels. Requires --channel.",
+          "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups.",
+          "--experimental": "Possible choices: jlap, lock.",
+          "--all": "Remove all packages, i.e., the entire environment.",
+          "--features": "Remove features (instead of packages).",
+          "--force-remove, --force": "Forces removal of a package without removing packages that depend on it.",
+          "--no-pin": "Ignore pinned package(s) that apply to the current operation.",
+          "--solver": "Choose which solver backend to use.",
+          "--experimental-solver": "Possible choices: classic.",
+          "-C, --use-index-cache": "Use cache of channel index files, even if it has expired.",
+          "-k, --insecure": "Allow conda to perform \"insecure\" SSL connections and transfers.",
+          "--offline": "Offline mode. Don't connect to the Internet.",
+          "--json": "Report all output as json. Suitable for using conda programmatically.",
+          "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.",
+          "-q, --quiet": "Do not display progress bar.",
+          "-d, --dry-run": "Only display what would have been done.",
+          "-y, --yes": "Sets any confirmation values to 'yes' automatically."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda remove' command is used to remove one or multiple packages from a specified conda environment. It offers various options including removing all packages, ignoring pinned packages, choosing a solver backend, and specifying how to handle SSL connections and transfers."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Removes packages from a specified conda environment",
+        "api_name": "conda remove",
+        "api_call": "conda remove [package_name]",
+        "api_arguments": {
+          "package_name": "Package names to remove from the environment.",
+          "--dev": "Use sys.executable -m conda in wrapper scripts instead of CONDA_EXE.",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix).",
+          "-c, --channel": "Additional channel to search for packages.",
+          "--use-local": "Use locally built packages. Identical to '-c local'.",
+          "--override-channels": "Do not search default or .condarc channels. Requires --channel.",
+          "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups.",
+          "--experimental": "Possible choices: jlap, lock.",
+          "--all": "Remove all packages, i.e., the entire environment.",
+          "--features": "Remove features (instead of packages).",
+          "--force-remove, --force": "Forces removal of a package without removing packages that depend on it.",
+          "--no-pin": "Ignore pinned package(s) that apply to the current operation.",
+          "--solver": "Choose which solver backend to use.",
+          "--experimental-solver": "Possible choices: classic.",
+          "-C, --use-index-cache": "Use cache of channel index files, even if it has expired.",
+          "-k, --insecure": "Allow conda to perform \"insecure\" SSL connections and transfers.",
+          "--offline": "Offline mode. Don't connect to the Internet.",
+          "--json": "Report all output as json. Suitable for using conda programmatically.",
+          "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.",
+          "-q, --quiet": "Do not display progress bar.",
+          "-d, --dry-run": "Only display what would have been done.",
+          "-y, --yes": "Sets any confirmation values to 'yes' automatically."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda remove' command is used to remove one or multiple packages from a specified conda environment. It offers various options including removing all packages, ignoring pinned packages, choosing a solver backend, and specifying how to handle SSL connections and transfers."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Renames an existing conda environment",
+        "api_name": "conda rename",
+        "api_call": "conda rename [destination]",
+        "api_arguments": {
+          "destination": "New name for the conda environment.",
+          "--force": "Force rename of an environment.",
+          "-d, --dry-run": "Only display what would have been done by the current command, arguments, and other flags.",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix)."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda rename' command renames an existing conda environment by its name or prefix. The base environment and the currently-active environment cannot be renamed. It provides options for forcing the renaming and for doing a dry-run."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Run an executable in a conda environment",
+        "api_name": "conda run",
+        "api_call": "conda run [executable_call]",
+        "api_arguments": {
+          "executable_call": "Executable name, with additional arguments to be passed to the executable on invocation.",
+          "-v, --verbose": "Use once for info, twice for debug, three times for trace.",
+          "--dev": "Sets CONDA_EXE to python -m conda, assuming the current working directory contains the root of conda development sources. This is mainly for use during tests where we test new conda sources against old Python versions.",
+          "--debug-wrapper-scripts": "When this is set, where implemented, the shell wrapper scripts will use the echo command to print debugging information to stderr (standard error).",
+          "--cwd": "Current working directory for command to run in. Defaults to the user's current working directory if no directory is specified.",
+          "--no-capture-output, --live-stream": "Don't capture stdout/stderr (standard out/standard error).",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix)."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda run' command allows users to run an executable within a specified conda environment. It provides options for verbose output, debugging, setting the working directory, and managing stdout/stderr capture."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Search for packages and display associated information",
+        "api_name": "conda search",
+        "api_call": "conda search [options]",
+        "api_arguments": {
+          "--envs": "Search all of the current user's environments. If run as Administrator (on Windows) or UID 0 (on unix), search all known environments on the system.",
+          "-i, --info": "Provide detailed information about each package.",
+          "--subdir, --platform": "Search the given subdir. Should be formatted like 'osx-64', 'linux-32', 'win-64', and so on. The default is to search the current platform.",
+          "-c, --channel": "Additional channel to search for packages.",
+          "--use-local": "Use locally built packages. Identical to '-c local'.",
+          "--override-channels": "Do not search default or .condarc channels. Requires --channel.",
+          "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups.",
+          "--experimental": "Possible choices: jlap, lock",
+          "-C, --use-index-cache": "Use cache of channel index files, even if it has expired.",
+          "-k, --insecure": "Allow conda to perform 'insecure' SSL connections and transfers.",
+          "--offline": "Offline mode. Don't connect to the Internet.",
+          "--json": "Report all output as json. Suitable for using conda programmatically.",
+          "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.",
+          "-q, --quiet": "Do not display progress bar."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+          "description": "The 'conda search' command allows users to search for packages within conda environments and display associated information. This includes details about the packages, the environments in which they are found, and their locations on specified platforms."
+        }
+    },
+    {
+        "domain": "package_management",
+        "framework": "conda",
+        "functionality": "Updates conda packages to the latest compatible version",
+        "api_name": "conda update",
+        "api_call": "conda update [options] [package_spec ...]",
+        "api_arguments": {
+          "package_spec": "List of packages to install or update in the conda environment.",
+          "--file": "Read package versions from the given file. Repeated file specifications can be passed (e.g. --file=file1 --file=file2).",
+          "-n, --name": "Name of environment.",
+          "-p, --prefix": "Full path to environment location (i.e. prefix).",
+          "-c, --channel": "Additional channel to search for packages.",
+          "--use-local": "Use locally built packages. Identical to '-c local'.",
+          "--override-channels": "Do not search default or .condarc channels. Requires --channel.",
+          "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups.",
+          "--experimental": "Possible choices: jlap, lock",
+          "--strict-channel-priority": "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel.",
+          "--no-channel-priority": "Package version takes precedence over channel priority.",
+          "--no-deps": "Do not install, update, remove, or change dependencies.",
+          "--only-deps": "Only install dependencies.",
+          "--no-pin": "Ignore pinned file.",
+          "--solver": "Choose which solver backend to use.",
+          "--experimental-solver": "Possible choices: classic",
+          "--force-reinstall": "Ensure that any user-requested package for the current operation is uninstalled and reinstalled, even if that package already exists in the environment.",
+          "--freeze-installed, --no-update-deps": "Do not update or change already-installed dependencies.",
+          "--update-deps": "Update dependencies that have available updates.",
+          "-S, --satisfied-skip-solve": "Exit early and do not run the solver if the requested specs are satisfied.",
+          "--update-all, --all": "Update all installed packages in the environment.",
+          "--update-specs": "Update based on provided specifications.",
+          "--copy": "Install all packages using copies instead of hard- or soft-linking.",
+          "--clobber": "Allow clobbering of overlapping file paths within packages, and suppress related warnings.",
+          "-C, --use-index-cache": "Use cache of channel index files, even if it has expired.",
+          "-k, --insecure": "Allow conda to perform 'insecure' SSL connections and transfers.",
+          "--offline": "Offline mode. Don't connect to the Internet.",
+          "--json": "Report all output as json. Suitable for using conda programmatically.",
+          "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE.",
+          "-q, --quiet": "Do not display progress bar.",
+          "-d, --dry-run": "Only display what would have been done.",
+          "-y, --yes": "Sets any confirmation values to 'yes' automatically. Users will not be asked to confirm any adding, deleting, backups, etc.",
+          "--download-only": "Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix.",
+          "--show-channel-urls": "Show channel urls."
+        },
+        "python_environment_requirements": ["conda"],
+        "example_code": [],
+        "meta_data": {
+            "description": "The 'conda update' command is used to update packages in a conda environment to the latest compatible version. It provides various options to control the update process such as specifying a particular environment, using a specific channel, controlling the dependency update behavior, and more. The API does not provide any specific examples."
+        }
+    }                                             
+]
