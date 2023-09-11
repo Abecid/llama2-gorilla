@@ -1,0 +1,17 @@
+api_name,query,model_answer
+clean,"How can I remove all unused packages, temp files, and logfiles in my conda environment?",conda clean --all
+compare,"How can I use the conda compare functionality to compare packages between two environments, where one environment is located at C:/Users/MyUser/Environments/Env1 and the other is represented in a file located at C:/Users/MyUser/Files/Env2.yml? I would also like the output to be in JSON format and not display a progress bar.",conda compare --json -q -p C:/Users/MyUser/Environments/Env1 C:/Users/MyUser/Files/Env2.yml
+config,I need to add a new configuration value to the active conda environment .condarc file. Can you help with the command?,conda config --env --add <value>
+create,"I want to create a new conda environment named 'myenv' with packages numpy and pandas using the additional channel 'conda-forge', and set all confirmation values to 'yes' automatically.",conda create -n myenv numpy pandas -c conda-forge -y
+info,I want to use the conda framework within the domain of Data Science to list all my known conda environments. How should I format the command?,conda info --envs
+init,How do I initialize conda for shell interaction in fish shell without displaying progress bar?,conda init -q fish
+install,"I want to install the packages numpy and pandas in a conda environment named datasci, and I want to read the package versions from a file named requirements.txt.",conda install -n datasci --file requirements.txt numpy pandas
+conda list,"How can I list installed packages in a specific conda environment called ""myenv"" in reverse order while showing the channel URLs?",conda list -n myenv --reverse --show-channel-urls
+conda notices,Can you help me retrieve the latest channel notifications from my local conda channel while overriding the default channels?,conda notices --use-local --override-channels --channel local
+conda package,"I need to know which conda package a certain file came from. The file path is ""/users/documents/file.txt"".",conda package -w /users/documents/file.txt
+conda remove,I need to remove the 'numpy' package from my conda environment named 'data_science'. I would prefer to run in offline mode and avoid any confirmations during the process. Print the result in JSON format and keep the log verbosity to 'DEBUG'.,conda remove -n data_science numpy --offline --yes --json -v -v
+conda remove,I want to remove the package numpy from my conda environment named myenv without connecting to the Internet.,conda remove -n myenv --offline numpy
+conda rename,"How can I rename my conda environment called ""my_env"" to ""new_env"" and force the renaming if necessary?",conda rename -n my_env new_env --force
+conda run,"I need to run the ""my_script.py"" executable in my conda environment named ""my_env"", and I want to run it in the ""/user/home/project"" directory with verbose output.",conda run -n my_env --cwd /user/home/project -v my_script.py
+conda search,Search for a specific package and display all details for all environments on my Windows system using conda.,conda search --info --envs --subdir win-64 packageName
+conda update,"I want to update the numpy package in my conda environment named ""analytics"" but without updating the dependencies.",conda update -n analytics --no-deps numpy

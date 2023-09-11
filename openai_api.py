@@ -1,6 +1,6 @@
 import os
 import openai
-import tiktoken
+# import tiktoken
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,7 +30,7 @@ class OpenAI_API:
         query = query.replace("\n", " ")
         return openai.Embedding.create(input = [query], model="text-embedding-ada-002")['data'][0]['embedding']
     
-    def token_count(self, text):
-        encoding = tiktoken.encoding_for_model(self.model)
-        num_tokens = len(encoding.encode(text))
-        return num_tokens
+    # def token_count(self, text):
+    #     encoding = tiktoken.encoding_for_model(self.model)
+    #     num_tokens = len(encoding.encode(text))
+    #     return num_tokens

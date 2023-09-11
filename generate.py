@@ -1,5 +1,6 @@
 import json
 import csv
+from tqdm import tqdm
 
 from prompts import template, example as example_prompt
 import openai_api
@@ -20,7 +21,11 @@ def main():
         columns = ['api_name', 'query', 'model_answer']
         writer = csv.DictWriter(csvfile, fieldnames=columns)
         writer.writeheader()
-        for example in data:
+        
+        print(f"Length of data: {len(data)}")
+        
+        for index, example in enumerate(tqdm(data)):
+            print(f"Example {index}/{len(data)}")
             example_str = json.dumps(example)
             
             domain = example['domain']
@@ -33,10 +38,11 @@ def main():
             
             prompt = template.template.format(example, example_str)
             
-            resposne = OpenAI_API.chatgpt(prompt)
+            response = OpenAI_API.chatgpt(prompt)
+            print('\t', response)
             
-            user_query = resposne.split("::")[0]
-            model_answer = resposne.split("::")[1]
+            user_query = response.split("\n")[0].split(": ")[1].strip()
+            model_answer = response.split("\n")[1].split(": ")[1].strip()
             
             sample_dict = {
                 'api_name': name,
