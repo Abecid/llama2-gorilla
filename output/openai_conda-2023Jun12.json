@@ -1,0 +1,82 @@
+[
+    {
+        "api_name": "clean",
+        "query": "How can I use conda to remove all unused packages, lock files, caches, tarballs, and log files from my data science environment?",
+        "model_answer": "conda clean --all"
+    },
+    {
+        "api_name": "compare",
+        "query": "I need to compare the packages between two conda environments and I have their full paths. I want the output in json and no progress bar should be displayed.",
+        "model_answer": "conda compare --json -q -p /path/to/first/environment -p /path/to/second/environment"
+    },
+    {
+        "api_name": "config",
+        "query": "How can I validate all my configuration sources in the conda environment using the command line interface?",
+        "model_answer": "conda config --validate"
+    },
+    {
+        "api_name": "create",
+        "query": "I need to create a new conda environment named \"test_env\" with packages specified in the file \"requirements.txt\". I also need to ensure that this is done offline, report all output as json, and set any confirmation values to 'yes' automatically.",
+        "model_answer": "conda create -n test_env --file requirements.txt --offline --json -y"
+    },
+    {
+        "api_name": "info",
+        "query": "I want to display all the information about the current conda installation in json format.",
+        "model_answer": "conda info -a --json"
+    },
+    {
+        "api_name": "init",
+        "query": "How can I initialize conda for all users on the system in the zsh shell and not display the progress bar?",
+        "model_answer": "conda init --all --system --quiet zsh"
+    },
+    {
+        "api_name": "install",
+        "query": "I want to install the numpy and pandas packages in my conda environment named 'data_env' using the 'conda' framework. Moreover, I want to use the packages from the channel 'conda-forge' and I also want to see the channel URLs while installation. Also, I agree to all the prompts during installation.",
+        "model_answer": "conda install -n data_env -c conda-forge --yes --show-channel-urls numpy pandas"
+    },
+    {
+        "api_name": "conda list",
+        "query": "List all installed conda packages in the environment named 'myenv' and display the channel urls.",
+        "model_answer": "conda list -n myenv --show-channel-urls"
+    },
+    {
+        "api_name": "conda notices",
+        "query": "Retrieve the latest channel notifications from the conda package management system, but only use locally built packages and don't search default or .condarc channels. Use the file name 'my_repodata.json' for the repodata on the remote server where the channels are configured.",
+        "model_answer": "conda notices --use-local --override-channels --repodata-fn 'my_repodata.json'"
+    },
+    {
+        "api_name": "conda package",
+        "query": "I want to create a new conda package with the name \"test\", version \"1.0\", and build number \"100\".",
+        "model_answer": "conda package --pkg-name test --pkg-version 1.0 --pkg-build 100"
+    },
+    {
+        "api_name": "conda remove",
+        "query": "I want to remove the numpy package from my conda environment named 'my_env', and I would like to ensure that pinned packages are ignored.",
+        "model_answer": "conda remove numpy --name my_env --no-pin"
+    },
+    {
+        "api_name": "conda remove",
+        "query": "I want to remove the pandas package from my conda environment named 'data_analysis'.",
+        "model_answer": "conda remove -n data_analysis pandas"
+    },
+    {
+        "api_name": "conda rename",
+        "query": "I need to rename my existing conda environment named \"old_env\" to \"new_env\".",
+        "model_answer": "conda rename -n old_env -d new_env"
+    },
+    {
+        "api_name": "conda run",
+        "query": "I need to run the executable \"my_script.py\" in a conda environment named \"my_env\" using verbose mode for debugging and I want to set the current working directory to \"/my_project\".",
+        "model_answer": "conda run -v --cwd /my_project --name my_env my_script.py"
+    },
+    {
+        "api_name": "conda search",
+        "query": "I want to search for a package in all of my conda environments and get detailed information about each of them.",
+        "model_answer": "conda search --envs -i, --info"
+    },
+    {
+        "api_name": "conda update",
+        "query": "Update all installed packages in my conda environment named \"DataScience\" and provide output as json.",
+        "model_answer": "conda update --all --name DataScience --json"
+    }
+]
