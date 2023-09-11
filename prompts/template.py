@@ -1,11 +1,12 @@
 template = """
-Create the correct command (or function call) given the user's request and the following example
-
-User request:
-<<<user>>>
+Create an example user query that requires the use of the provided API and also create the corresponding correct command (or function call) given the following example
 
 Example:
-<<<reference>>>
+{}
 
-Output: 
+API:
+{}
+
+Output the user request and the corresponding correct command for the api in the following format:
+<User Request>::<Correct Command>\n
 """

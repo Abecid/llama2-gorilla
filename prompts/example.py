@@ -1,6 +1,6 @@
 example = """
-Prompt:
-<<<user>>>: clean up the conda environment. <<<reference>>>: "{
+<<<user>>>: clean up the conda environment.
+<<<reference>>>: "{
         "domain": "Data Science",
         "framework": "conda",
         "functionality": "Removes unused packages and caches in the conda environment.",
@@ -26,7 +26,5 @@ Prompt:
           "description": "A command line interface function in conda that allows users to remove unnecessary files and packages, clean up caches and manage output and flow control."
         }
     }"
-
-Model Answer: 
-conda clean 
+<<<Model Answer>>>: conda clean 
 """
