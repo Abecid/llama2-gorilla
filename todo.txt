@@ -1,0 +1,4 @@
+1. Prompt with in-context examples and change the prompt to generate queries that mention the parameters that the api requires (include in-context examples)
+2. Check samples (quality and accuracy)
+3. Work with linux and conda examples
+4. Original API doc include in the json outputs

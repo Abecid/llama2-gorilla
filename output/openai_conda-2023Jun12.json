@@ -1,82 +1,324 @@
 [
     {
-        "api_name": "clean",
-        "query": "How can I use conda to remove all unused packages, lock files, caches, tarballs, and log files from my data science environment?",
-        "model_answer": "conda clean --all"
+        "query": "How can I remove all unnecessary files, packages, tarballs, caches, and manage output in json format in my Conda environment without displaying the progress yet setting all confirmation values to 'yes' automatically?",
+        "model_answer": "conda clean --all --json --quiet --yes",
+        "original": {
+            "domain": "Data Science",
+            "framework": "conda",
+            "functionality": "Removes unused packages and caches in the conda environment.",
+            "api_name": "clean",
+            "api_call": "conda clean [OPTIONS]",
+            "api_arguments": [
+                {
+                    "-a, --all": "Remove index cache, lock files, unused cache packages, tarballs, and logfiles."
+                },
+                {
+                    "-i, --index-cache": "Remove index cache."
+                },
+                {
+                    "-p, --packages": "Remove unused packages from writable package caches."
+                },
+                {
+                    "-t, --tarballs": "Remove cached package tarballs."
+                },
+                {
+                    "-f, --force-pkgs-dirs": "Remove all writable package caches."
+                },
+                {
+                    "-c, --tempfiles": "Remove temporary files."
+                },
+                {
+                    "-l, --logfiles": "Remove log files."
+                },
+                {
+                    "--json": "Report all output as json."
+                },
+                {
+                    "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."
+                },
+                {
+                    "-q, --quiet": "Do not display progress bar."
+                },
+                {
+                    "-d, --dry-run": "Only display what would have been done."
+                },
+                {
+                    "-y, --yes": "Sets any confirmation values to 'yes' automatically."
+                }
+            ],
+            "python_environment_requirements": [
+                "conda"
+            ],
+            "example_code": [],
+            "meta_data": {
+                "description": "A command line interface function in conda that allows users to remove unnecessary files and packages, clean up caches and manage output and flow control."
+            }
+        }
     },
     {
-        "api_name": "compare",
-        "query": "I need to compare the packages between two conda environments and I have their full paths. I want the output in json and no progress bar should be displayed.",
-        "model_answer": "conda compare --json -q -p /path/to/first/environment -p /path/to/second/environment"
+        "query": "I need to compare the packages between my two conda environments. The environment files are at /home/user/env1.yaml and /home/user/env2.yaml. I would also like the output in JSON format.",
+        "model_answer": "conda compare --json /home/user/env1.yaml /home/user/env2.yaml",
+        "original": {
+            "domain": "Data Science",
+            "framework": "conda",
+            "functionality": "Compares packages between conda environments.",
+            "api_name": "compare",
+            "api_call": "conda compare [OPTIONS] file",
+            "api_arguments": [
+                {
+                    "file": "Path to the environment file that is to be compared against."
+                },
+                {
+                    "--json": "Report all output as json."
+                },
+                {
+                    "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."
+                },
+                {
+                    "-q, --quiet": "Do not display progress bar."
+                },
+                {
+                    "-n, --name": "Name of environment."
+                },
+                {
+                    "-p, --prefix": "Full path to environment location (i.e. prefix)."
+                }
+            ],
+            "python_environment_requirements": [
+                "conda"
+            ],
+            "example_code": [],
+            "meta_data": {
+                "description": "A command line interface function in conda that allows users to compare packages between different conda environments."
+            }
+        }
     },
     {
-        "api_name": "config",
-        "query": "How can I validate all my configuration sources in the conda environment using the command line interface?",
-        "model_answer": "conda config --validate"
+        "query": "How can I add a configuration value to the end of a list key in the system .condarc file using the conda config command in Data Science domain?",
+        "model_answer": "conda config --system --append \"channel_priority strict\"",
+        "original": {
+            "domain": "Data Science",
+            "framework": "conda",
+            "functionality": "Modifies configuration values in .condarc. Modeled after the git config command.",
+            "api_name": "config",
+            "api_call": "conda config [OPTIONS]",
+            "api_arguments": [
+                {
+                    "--json": "Report all output as json."
+                },
+                {
+                    "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."
+                },
+                {
+                    "-q, --quiet": "Do not display progress bar."
+                },
+                {
+                    "--system": "Write to the system .condarc file."
+                },
+                {
+                    "--env": "Write to the active conda environment .condarc file."
+                },
+                {
+                    "--file": "Write to the given file."
+                },
+                {
+                    "--show": "Display configuration values."
+                },
+                {
+                    "--show-sources": "Display all identified configuration sources."
+                },
+                {
+                    "--validate": "Validate all configuration sources."
+                },
+                {
+                    "--describe": "Describe given configuration parameters."
+                },
+                {
+                    "--write-default": "Write the default configuration to a file."
+                },
+                {
+                    "--get": "Get a configuration value."
+                },
+                {
+                    "--append": "Add one configuration value to the end of a list key."
+                },
+                {
+                    "--prepend, --add": "Add one configuration value to the beginning of a list key."
+                },
+                {
+                    "--set": "Set a boolean or string key."
+                },
+                {
+                    "--remove": "Remove a configuration value from a list key."
+                },
+                {
+                    "--remove-key": "Remove a configuration key (and all its values)."
+                },
+                {
+                    "--stdin": "Apply configuration information given in yaml format piped through stdin."
+                }
+            ],
+            "python_environment_requirements": [
+                "conda"
+            ],
+            "example_code": [],
+            "meta_data": {
+                "description": "A command line interface function in conda that allows users to modify configuration values in .condarc file. This function is modelled after the git config command."
+            }
+        }
     },
     {
-        "api_name": "create",
-        "query": "I need to create a new conda environment named \"test_env\" with packages specified in the file \"requirements.txt\". I also need to ensure that this is done offline, report all output as json, and set any confirmation values to 'yes' automatically.",
-        "model_answer": "conda create -n test_env --file requirements.txt --offline --json -y"
+        "query": "I want to create a new conda environment named 'data_analysis' with the python and numpy packages from the bioconda channel.",
+        "model_answer": "conda create -n data_analysis python numpy -c bioconda",
+        "original": {
+            "domain": "Data Science",
+            "framework": "conda",
+            "functionality": "Creates a new conda environment from a list of specified packages.",
+            "api_name": "create",
+            "api_call": "conda create [OPTIONS] [package_spec ...]",
+            "api_arguments": [
+                {
+                    "package_spec": "List of packages to install or update in the conda environment."
+                },
+                {
+                    "--clone": "Create a new environment as a copy of an existing local environment."
+                },
+                {
+                    "--file": "Read package versions from the given file. Repeated file specifications can be passed."
+                },
+                {
+                    "--dev": "Use sys.executable -m conda in wrapper scripts instead of CONDA_EXE."
+                },
+                {
+                    "-n, --name": "Name of environment."
+                },
+                {
+                    "-p, --prefix": "Full path to environment location."
+                },
+                {
+                    "-c, --channel": "Additional channel to search for packages."
+                },
+                {
+                    "--use-local": "Use locally built packages."
+                },
+                {
+                    "--override-channels": "Do not search default or .condarc channels. Requires --channel."
+                },
+                {
+                    "--repodata-fn": "Specify file name of repodata on the remote server where your channels are configured or within local backups."
+                },
+                {
+                    "--experimental": "Download incremental package index data from repodata.jlap; implies 'lock'. lock: use locking when reading, updating index (repodata.json) cache."
+                },
+                {
+                    "--strict-channel-priority": "Packages in lower priority channels are not considered if a package with the same name appears in a higher priority channel."
+                },
+                {
+                    "--no-channel-priority": "Package version takes precedence over channel priority."
+                },
+                {
+                    "--no-deps": "Do not install, update, remove, or change dependencies."
+                },
+                {
+                    "--only-deps": "Only install dependencies."
+                },
+                {
+                    "--no-pin": "Ignore pinned file."
+                },
+                {
+                    "--no-default-packages": "Ignore create_default_packages in the .condarc file."
+                },
+                {
+                    "--solver": "Choose which solver backend to use."
+                },
+                {
+                    "--experimental-solver": "Possible choices: classic"
+                },
+                {
+                    "--copy": "Install all packages using copies instead of hard- or soft-linking."
+                },
+                {
+                    "-C, --use-index-cache": "Use cache of channel index files, even if it has expired."
+                },
+                {
+                    "-k, --insecure": "Allow conda to perform 'insecure' SSL connections and transfers."
+                },
+                {
+                    "--offline": "Offline mode. Don't connect to the Internet."
+                },
+                {
+                    "--json": "Report all output as json."
+                },
+                {
+                    "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."
+                },
+                {
+                    "-q, --quiet": "Do not display progress bar."
+                },
+                {
+                    "-d, --dry-run": "Only display what would have been done."
+                },
+                {
+                    "-y, --yes": "Sets any confirmation values to 'yes' automatically."
+                },
+                {
+                    "--download-only": "Solve an environment and ensure package caches are populated, but exit prior to unlinking and linking packages into the prefix."
+                },
+                {
+                    "--show-channel-urls": "Show channel urls."
+                }
+            ],
+            "python_environment_requirements": [
+                "conda"
+            ],
+            "example_code": [],
+            "meta_data": {
+                "description": "A command line interface function in conda that allows users to create a new conda environment from a list of specified packages."
+            }
+        }
     },
     {
-        "api_name": "info",
-        "query": "I want to display all the information about the current conda installation in json format.",
-        "model_answer": "conda info -a --json"
-    },
-    {
-        "api_name": "init",
-        "query": "How can I initialize conda for all users on the system in the zsh shell and not display the progress bar?",
-        "model_answer": "conda init --all --system --quiet zsh"
-    },
-    {
-        "api_name": "install",
-        "query": "I want to install the numpy and pandas packages in my conda environment named 'data_env' using the 'conda' framework. Moreover, I want to use the packages from the channel 'conda-forge' and I also want to see the channel URLs while installation. Also, I agree to all the prompts during installation.",
-        "model_answer": "conda install -n data_env -c conda-forge --yes --show-channel-urls numpy pandas"
-    },
-    {
-        "api_name": "conda list",
-        "query": "List all installed conda packages in the environment named 'myenv' and display the channel urls.",
-        "model_answer": "conda list -n myenv --show-channel-urls"
-    },
-    {
-        "api_name": "conda notices",
-        "query": "Retrieve the latest channel notifications from the conda package management system, but only use locally built packages and don't search default or .condarc channels. Use the file name 'my_repodata.json' for the repodata on the remote server where the channels are configured.",
-        "model_answer": "conda notices --use-local --override-channels --repodata-fn 'my_repodata.json'"
-    },
-    {
-        "api_name": "conda package",
-        "query": "I want to create a new conda package with the name \"test\", version \"1.0\", and build number \"100\".",
-        "model_answer": "conda package --pkg-name test --pkg-version 1.0 --pkg-build 100"
-    },
-    {
-        "api_name": "conda remove",
-        "query": "I want to remove the numpy package from my conda environment named 'my_env', and I would like to ensure that pinned packages are ignored.",
-        "model_answer": "conda remove numpy --name my_env --no-pin"
-    },
-    {
-        "api_name": "conda remove",
-        "query": "I want to remove the pandas package from my conda environment named 'data_analysis'.",
-        "model_answer": "conda remove -n data_analysis pandas"
-    },
-    {
-        "api_name": "conda rename",
-        "query": "I need to rename my existing conda environment named \"old_env\" to \"new_env\".",
-        "model_answer": "conda rename -n old_env -d new_env"
-    },
-    {
-        "api_name": "conda run",
-        "query": "I need to run the executable \"my_script.py\" in a conda environment named \"my_env\" using verbose mode for debugging and I want to set the current working directory to \"/my_project\".",
-        "model_answer": "conda run -v --cwd /my_project --name my_env my_script.py"
-    },
-    {
-        "api_name": "conda search",
-        "query": "I want to search for a package in all of my conda environments and get detailed information about each of them.",
-        "model_answer": "conda search --envs -i, --info"
-    },
-    {
-        "api_name": "conda update",
-        "query": "Update all installed packages in my conda environment named \"DataScience\" and provide output as json.",
-        "model_answer": "conda update --all --name DataScience --json"
+        "query": "I need to display all information, including environment variables and channels with tokens exposed, about the current conda installation in json format.",
+        "model_answer": "conda info -a -s --unsafe-channels --json",
+        "original": {
+            "domain": "Data Science",
+            "framework": "conda",
+            "functionality": "Displays information about the current conda installation.",
+            "api_name": "info",
+            "api_call": "conda info [OPTIONS]",
+            "api_arguments": [
+                {
+                    "-a, --all": "Show all information."
+                },
+                {
+                    "--base": "Display base environment path."
+                },
+                {
+                    "-e, --envs": "List all known conda environments."
+                },
+                {
+                    "-s, --system": "List environment variables."
+                },
+                {
+                    "--unsafe-channels": "Display list of channels with tokens exposed."
+                },
+                {
+                    "--json": "Report all output as json."
+                },
+                {
+                    "-v, --verbose": "Can be used multiple times. Once for INFO, twice for DEBUG, three times for TRACE."
+                },
+                {
+                    "-q, --quiet": "Do not display progress bar."
+                }
+            ],
+            "python_environment_requirements": [
+                "conda"
+            ],
+            "example_code": [],
+            "meta_data": {
+                "description": "A command line interface function in conda that displays information about the current conda installation."
+            }
+        }
     }
 ]
