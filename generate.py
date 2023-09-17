@@ -53,14 +53,16 @@ def generate_queries_for_file(data, clean_input_name):
             
             if MULTI_OUTPUT > 1:
                 # Find the start positions of each "User query<n>"
-                positions = [match.start() for match in re.finditer(r'User query\d+', response)]
+                positions = [match.start() for match in re.finditer(r'User query', response)]
                 # Extract substrings based on these start positions
                 responses = [response[positions[i]:positions[i+1]] if i < len(positions) - 1 else response[positions[i]:] for i in range(len(positions))]
                 # responses = response.split("\n\n")
                 
                 for i in range(len(responses)):
                     response = responses[i]
-                    user_query = response.split("\n")[0].split(": ")[1].strip()
+                    user_query_part = response[:response.find("Correct Command")]
+                    user_query = user_query_part.split(":")[1].strip()
+                    # user_query = response.split("\n")[0].split(": ")[1].strip()
                     model_answer_part = response[response.find("Correct Command"):]
                     model_answer = model_answer_part.split("\n")[0].split(": ")
                     if len(model_answer) > 1: model_answer = model_answer[1].strip()
