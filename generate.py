@@ -10,10 +10,12 @@ import openai_api
 conda = "openai_conda-2023Jun12.json"
 linux = "openai_linux-2023Jun13.json"
 
-inputs = [linux]
+inputs = [conda, linux]
 
 model = "gpt-3.5-turbo"
-model = "gpt-4"
+# model = "gpt-4"
+
+model_clean_name = model.replace(".", "-").replace("/", "_").replace(" ", "_").replace("-", "_")
 
 OpenAI_API = openai_api.OpenAI_API(model=model)
 example_api = example_prompt.example
@@ -59,11 +61,13 @@ def generate_queries_for_file(data, clean_input_name):
                 for i in range(len(responses)):
                     response = responses[i]
                     user_query = response.split("\n")[0].split(": ")[1].strip()
-                    model_answer = response.split("\n")[1].split(": ")
+                    model_answer_part = response[response.find("Correct Command"):]
+                    model_answer = model_answer_part.split("\n")[0].split(": ")
                     if len(model_answer) > 1: model_answer = model_answer[1].strip()
                     else: model_answer = ""
-                    if len(response.split("\n")) > 2:
-                        model_answer2 = "\n".join(response.split("\n")[2:])
+                    if len(model_answer_part.split("\n")) > 2:
+                        # model_answer2 = "\n".join(model_answer_part.split("\n")[1:])
+                        model_answer2 = model_answer_part[model_answer_part.find("\n")+1:]
                         model_answer = f"{model_answer}\n{model_answer2}".strip()
                         # if len(model_answer) == 0:
                         #     model_answer = model_answer2
@@ -98,7 +102,7 @@ def generate_queries_for_file(data, clean_input_name):
     # Convert to string format
     date_string = now.strftime('%m_%d')
     
-    with open(f'output/{clean_input_name}_{date_string}.json', 'w') as jsonfile:
+    with open(f'output/{clean_input_name}_{date_string}_{model_clean_name}.json', 'w') as jsonfile:
         json.dump(output_data, jsonfile, indent=4)
 
 def main():
