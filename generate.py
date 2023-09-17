@@ -54,7 +54,7 @@ def generate_queries_for_file(data, clean_input_name):
             responses = [response[positions[i]:positions[i+1]] if i < len(positions) - 1 else response[positions[i]:] for i in range(len(positions))]
             # responses = response.split("\n\n")
             
-            for i in range(MULTI_OUTPUT):
+            for i in range(len(responses)):
                 response = responses[i]
                 user_query = response.split("\n")[0].split(": ")[1].strip()
                 model_answer = response.split("\n")[1].split(": ")
