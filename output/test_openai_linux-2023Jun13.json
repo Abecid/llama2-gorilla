@@ -1,0 +1,422 @@
+[
+    {
+        "query": "What is the current working directory on my Linux machine?",
+        "model_answer": "import os; os.getcwd()",
+        "original": {
+            "domain": "linux",
+            "framework": "OS",
+            "functionality": "Get the current working directory",
+            "api_name": "Get Current Working Directory",
+            "api_call": "os.getcwd()",
+            "api_arguments": "None",
+            "python_environment_requirements": "import os",
+            "description": "This linux API is used to get the current working directory. The API returns a string representing the current working directory.",
+            "example_code": [
+                {
+                    "description": "Example to show usage of getcwd()",
+                    "code": "import os\nprint(os.getcwd())"
+                }
+            ]
+        }
+    },
+    {
+        "query": "On this Linux system, can you tell me the directory I'm currently working in?",
+        "model_answer": "import os; os.getcwd()",
+        "original": {
+            "domain": "linux",
+            "framework": "OS",
+            "functionality": "Get the current working directory",
+            "api_name": "Get Current Working Directory",
+            "api_call": "os.getcwd()",
+            "api_arguments": "None",
+            "python_environment_requirements": "import os",
+            "description": "This linux API is used to get the current working directory. The API returns a string representing the current working directory.",
+            "example_code": [
+                {
+                    "description": "Example to show usage of getcwd()",
+                    "code": "import os\nprint(os.getcwd())"
+                }
+            ]
+        }
+    },
+    {
+        "query": "I need to know where I currently am in the Linux filesystem. What's the active directory?",
+        "model_answer": "import os; os.getcwd()",
+        "original": {
+            "domain": "linux",
+            "framework": "OS",
+            "functionality": "Get the current working directory",
+            "api_name": "Get Current Working Directory",
+            "api_call": "os.getcwd()",
+            "api_arguments": "None",
+            "python_environment_requirements": "import os",
+            "description": "This linux API is used to get the current working directory. The API returns a string representing the current working directory.",
+            "example_code": [
+                {
+                    "description": "Example to show usage of getcwd()",
+                    "code": "import os\nprint(os.getcwd())"
+                }
+            ]
+        }
+    },
+    {
+        "query": "How can I install the RPM package named postgresql-12.6-1PGDG.rhel7.x86_64.rpm in a Linux system?",
+        "model_answer": "rpm -ivh postgresql-12.6-1PGDG.rhel7.x86_64.rpm",
+        "original": {
+            "domain": "linux",
+            "framework": "RPM (RedHat Package Manager)",
+            "functionality": "Package management",
+            "api_name": "RPM commands",
+            "api_call": "rpm -ivh [package_name]",
+            "api_arguments": [
+                "package_name"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "Install an RPM package",
+                    "code": "rpm -ivh pidgin-2.7.9-5.el6.2.i686.rpm"
+                }
+            ],
+            "description": "RPM is used for installing, uninstalling, upgrading, querying, verifying, and managing software packages in linux. It deals with .rpm files, which contain the actual information about the packages such as what it is, from where it comes, dependencies info, version info etc. It keeps the information of all the installed packages under /var/lib/rpm database."
+        }
+    },
+    {
+        "query": "What would be the correct command to install the RPM package firefox-78.0-1.el7.centos.x86_64.rpm using RPM commands?",
+        "model_answer": "rpm -ivh firefox-78.0-1.el7.centos.x86_64.rpm",
+        "original": {
+            "domain": "linux",
+            "framework": "RPM (RedHat Package Manager)",
+            "functionality": "Package management",
+            "api_name": "RPM commands",
+            "api_call": "rpm -ivh [package_name]",
+            "api_arguments": [
+                "package_name"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "Install an RPM package",
+                    "code": "rpm -ivh pidgin-2.7.9-5.el6.2.i686.rpm"
+                }
+            ],
+            "description": "RPM is used for installing, uninstalling, upgrading, querying, verifying, and managing software packages in linux. It deals with .rpm files, which contain the actual information about the packages such as what it is, from where it comes, dependencies info, version info etc. It keeps the information of all the installed packages under /var/lib/rpm database."
+        }
+    },
+    {
+        "query": "Can you guide me on how to install the RPM package named ruby-2.7.1-1.el7.x86_64.rpm in a Linux environment?",
+        "model_answer": "rpm -ivh ruby-2.7.1-1.el7.x86_64.rpm",
+        "original": {
+            "domain": "linux",
+            "framework": "RPM (RedHat Package Manager)",
+            "functionality": "Package management",
+            "api_name": "RPM commands",
+            "api_call": "rpm -ivh [package_name]",
+            "api_arguments": [
+                "package_name"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "Install an RPM package",
+                    "code": "rpm -ivh pidgin-2.7.9-5.el6.2.i686.rpm"
+                }
+            ],
+            "description": "RPM is used for installing, uninstalling, upgrading, querying, verifying, and managing software packages in linux. It deals with .rpm files, which contain the actual information about the packages such as what it is, from where it comes, dependencies info, version info etc. It keeps the information of all the installed packages under /var/lib/rpm database."
+        }
+    },
+    {
+        "query": "I need to terminate a misbehaving process in Linux, and the process id is 4789. Can you help me with that?",
+        "model_answer": "kill -9 4789",
+        "original": {
+            "domain": "linux",
+            "framework": "Command-Line",
+            "functionality": "Process Management",
+            "api_name": "Kill Command",
+            "api_call": "kill -9 3139",
+            "api_arguments": [
+                "-9",
+                "3139"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "To kill a process with process id 3139",
+                    "code": "kill -9 3139"
+                }
+            ],
+            "description": "The kill command in linux is used to send a signal to a process. By default, it sends a TERM signal, which requests the process to terminate. However, the process may choose to ignore this signal. The -9 option sends a KILL signal, which forces the process to terminate immediately. The process cannot ignore a KILL signal. The kill command requires the process id (PID) as an argument. The PID can be found using commands such as ps, pidof, or pgrep."
+        }
+    },
+    {
+        "query": "I have a process that's causing trouble with the id 5012. Can I use the kill command to force it to stop on a Linux terminal?",
+        "model_answer": "kill -9 5012",
+        "original": {
+            "domain": "linux",
+            "framework": "Command-Line",
+            "functionality": "Process Management",
+            "api_name": "Kill Command",
+            "api_call": "kill -9 3139",
+            "api_arguments": [
+                "-9",
+                "3139"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "To kill a process with process id 3139",
+                    "code": "kill -9 3139"
+                }
+            ],
+            "description": "The kill command in linux is used to send a signal to a process. By default, it sends a TERM signal, which requests the process to terminate. However, the process may choose to ignore this signal. The -9 option sends a KILL signal, which forces the process to terminate immediately. The process cannot ignore a KILL signal. The kill command requires the process id (PID) as an argument. The PID can be found using commands such as ps, pidof, or pgrep."
+        }
+    },
+    {
+        "query": "Unfortunately, I have a process that won't end normally on my Linux server. The pid is 6213. How do I use the kill command to force it to stop immediately?",
+        "model_answer": "kill -9 6213",
+        "original": {
+            "domain": "linux",
+            "framework": "Command-Line",
+            "functionality": "Process Management",
+            "api_name": "Kill Command",
+            "api_call": "kill -9 3139",
+            "api_arguments": [
+                "-9",
+                "3139"
+            ],
+            "python_environment_requirements": "Python not required",
+            "example_code": [
+                {
+                    "description": "To kill a process with process id 3139",
+                    "code": "kill -9 3139"
+                }
+            ],
+            "description": "The kill command in linux is used to send a signal to a process. By default, it sends a TERM signal, which requests the process to terminate. However, the process may choose to ignore this signal. The -9 option sends a KILL signal, which forces the process to terminate immediately. The process cannot ignore a KILL signal. The kill command requires the process id (PID) as an argument. The PID can be found using commands such as ps, pidof, or pgrep."
+        }
+    },
+    {
+        "query": "How do I change the root directory of my current process to '/home/user/newRoot' in Python using the os module?",
+        "model_answer": "import os\nos.chroot('/home/user/newRoot')",
+        "original": {
+            "domain": "linux",
+            "framework": "os",
+            "functionality": "Change the root directory of the current process",
+            "api_name": "chroot",
+            "api_call": "os.chroot(path)",
+            "api_arguments": [
+                {
+                    "name": "path",
+                    "type": "string",
+                    "description": "The path to the new root directory."
+                }
+            ],
+            "python_environment_requirements": [
+                {
+                    "name": "os",
+                    "version": "Python Standard Library"
+                }
+            ],
+            "example_code": [
+                {
+                    "description": "Change the root directory to '/tmp'",
+                    "code": "import os\nos.chroot('/tmp')"
+                }
+            ],
+            "description": "The chroot method in the os module of Python Standard Library is used to change the root directory of the current process to the path specified. This can be useful in creating a sandbox environment for the process where it can't access files outside the new root directory."
+        }
+    },
+    {
+        "query": "I'm trying to create a sandbox environment for my process and need to change the root directory to '/var/sandbox'. How can I do this with Python's os.chroot method?",
+        "model_answer": "import os\nos.chroot('/var/sandbox')",
+        "original": {
+            "domain": "linux",
+            "framework": "os",
+            "functionality": "Change the root directory of the current process",
+            "api_name": "chroot",
+            "api_call": "os.chroot(path)",
+            "api_arguments": [
+                {
+                    "name": "path",
+                    "type": "string",
+                    "description": "The path to the new root directory."
+                }
+            ],
+            "python_environment_requirements": [
+                {
+                    "name": "os",
+                    "version": "Python Standard Library"
+                }
+            ],
+            "example_code": [
+                {
+                    "description": "Change the root directory to '/tmp'",
+                    "code": "import os\nos.chroot('/tmp')"
+                }
+            ],
+            "description": "The chroot method in the os module of Python Standard Library is used to change the root directory of the current process to the path specified. This can be useful in creating a sandbox environment for the process where it can't access files outside the new root directory."
+        }
+    },
+    {
+        "query": "How can I switch the root directory of my current process to '/usr/local/myprocess' using Python's os module chroot method?",
+        "model_answer": "import os\nos.chroot('/usr/local/myprocess')",
+        "original": {
+            "domain": "linux",
+            "framework": "os",
+            "functionality": "Change the root directory of the current process",
+            "api_name": "chroot",
+            "api_call": "os.chroot(path)",
+            "api_arguments": [
+                {
+                    "name": "path",
+                    "type": "string",
+                    "description": "The path to the new root directory."
+                }
+            ],
+            "python_environment_requirements": [
+                {
+                    "name": "os",
+                    "version": "Python Standard Library"
+                }
+            ],
+            "example_code": [
+                {
+                    "description": "Change the root directory to '/tmp'",
+                    "code": "import os\nos.chroot('/tmp')"
+                }
+            ],
+            "description": "The chroot method in the os module of Python Standard Library is used to change the root directory of the current process to the path specified. This can be useful in creating a sandbox environment for the process where it can't access files outside the new root directory."
+        }
+    },
+    {
+        "query": "I want to remove a single empty directory named \"photos\".",
+        "model_answer": "rmdir photos",
+        "original": {
+            "domain": "linux",
+            "framework": "Command Line",
+            "functionality": "Remove Directory",
+            "api_name": "rmdir",
+            "api_call": "rmdir directory_name",
+            "api_arguments": [
+                "directory_name"
+            ],
+            "python_environment_requirements": [
+                "linux OS"
+            ],
+            "example_code": [
+                {
+                    "description": "Remove an empty directory",
+                    "code": "rmdir dir1"
+                },
+                {
+                    "description": "Remove multiple directories",
+                    "code": "rmdir dir1 dir2 dir3"
+                },
+                {
+                    "description": "Remove directory in verbose mode",
+                    "code": "rmdir -v dir1"
+                },
+                {
+                    "description": "Remove directory and all its ancestors",
+                    "code": "rmdir -p -v dir1/dir2/dir3/dir4/dir5"
+                },
+                {
+                    "description": "Ignore failure on non-empty directory",
+                    "code": "rmdir --ignore-fail-on-non-empty dir1"
+                },
+                {
+                    "description": "Use regular expressions to remove directories",
+                    "code": "rmdir -v dir?"
+                }
+            ],
+            "description": "The rmdir command in linux is used to remove directories. It can only remove empty directories. The command can be used with various options like -v for verbose mode, -p to remove a directory and all its ancestors and --ignore-fail-on-non-empty to suppress errors when trying to remove non-empty directories. Regular expressions can also be used with the rmdir command to match and remove directories."
+        }
+    },
+    {
+        "query": "I need to delete multiple directories called \"documents\", \"downloads\" and \"music\" but show me a verbose of what's happening.",
+        "model_answer": "rmdir -v documents downloads music",
+        "original": {
+            "domain": "linux",
+            "framework": "Command Line",
+            "functionality": "Remove Directory",
+            "api_name": "rmdir",
+            "api_call": "rmdir directory_name",
+            "api_arguments": [
+                "directory_name"
+            ],
+            "python_environment_requirements": [
+                "linux OS"
+            ],
+            "example_code": [
+                {
+                    "description": "Remove an empty directory",
+                    "code": "rmdir dir1"
+                },
+                {
+                    "description": "Remove multiple directories",
+                    "code": "rmdir dir1 dir2 dir3"
+                },
+                {
+                    "description": "Remove directory in verbose mode",
+                    "code": "rmdir -v dir1"
+                },
+                {
+                    "description": "Remove directory and all its ancestors",
+                    "code": "rmdir -p -v dir1/dir2/dir3/dir4/dir5"
+                },
+                {
+                    "description": "Ignore failure on non-empty directory",
+                    "code": "rmdir --ignore-fail-on-non-empty dir1"
+                },
+                {
+                    "description": "Use regular expressions to remove directories",
+                    "code": "rmdir -v dir?"
+                }
+            ],
+            "description": "The rmdir command in linux is used to remove directories. It can only remove empty directories. The command can be used with various options like -v for verbose mode, -p to remove a directory and all its ancestors and --ignore-fail-on-non-empty to suppress errors when trying to remove non-empty directories. Regular expressions can also be used with the rmdir command to match and remove directories."
+        }
+    },
+    {
+        "query": "I want to delete a directory called \"projects\" and all its ancestor directories without showing any errors about non-empty directories.",
+        "model_answer": "rmdir --ignore-fail-on-non-empty -p -v projects/inner_project1/inner_project2/inner_project3",
+        "original": {
+            "domain": "linux",
+            "framework": "Command Line",
+            "functionality": "Remove Directory",
+            "api_name": "rmdir",
+            "api_call": "rmdir directory_name",
+            "api_arguments": [
+                "directory_name"
+            ],
+            "python_environment_requirements": [
+                "linux OS"
+            ],
+            "example_code": [
+                {
+                    "description": "Remove an empty directory",
+                    "code": "rmdir dir1"
+                },
+                {
+                    "description": "Remove multiple directories",
+                    "code": "rmdir dir1 dir2 dir3"
+                },
+                {
+                    "description": "Remove directory in verbose mode",
+                    "code": "rmdir -v dir1"
+                },
+                {
+                    "description": "Remove directory and all its ancestors",
+                    "code": "rmdir -p -v dir1/dir2/dir3/dir4/dir5"
+                },
+                {
+                    "description": "Ignore failure on non-empty directory",
+                    "code": "rmdir --ignore-fail-on-non-empty dir1"
+                },
+                {
+                    "description": "Use regular expressions to remove directories",
+                    "code": "rmdir -v dir?"
+                }
+            ],
+            "description": "The rmdir command in linux is used to remove directories. It can only remove empty directories. The command can be used with various options like -v for verbose mode, -p to remove a directory and all its ancestors and --ignore-fail-on-non-empty to suppress errors when trying to remove non-empty directories. Regular expressions can also be used with the rmdir command to match and remove directories."
+        }
+    }
+]

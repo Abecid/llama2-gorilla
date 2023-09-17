@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set OpenAI API Key
-openai.api_key = os.environ.get('OPENAI_KEY')
+openai.api_key = os.environ.get('OPENAI_KEY_TIANJUN')
 
 model = "gpt-3.5-turbo"
 system_message = "You are a helpful assistant"
