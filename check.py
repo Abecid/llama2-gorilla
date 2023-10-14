@@ -1,6 +1,8 @@
 import json
 import ast
 
+filename = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48.json"
+
 def check_string(code_str):
     """Check if a string has correct Python syntax."""
     parsable = is_parsable(code_str)
@@ -28,7 +30,6 @@ def count_non_parsable_apis(data):
 
 def main():
     # Path to your JSON file
-    filename = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned.json"
     file_path = f'output/{filename}'
     with open(file_path, 'r') as f:
         data = json.load(f)
@@ -36,9 +37,10 @@ def main():
     print(f"Number of APIs with incorrect syntax: {num_errors}/{len(data)}")
 
 if __name__ == "__main__":
-    # main()
+    main()
     # test_str = "aws.kinesis.describe-stream-summary(stream-name=samplestream)"
     # test_str = "aws.kinesis.describe_stream_summary(stream-name=samplestream)"
     # test_str = "aws.kinesis.describe_stream_summary(stream_name=samplestream)"
-    test_str = "aws.ecs.put_account_setting(name=serviceLongArnFormat, value = \"enabled\")"
-    check_string(test_str)
+    # test_str = "aws.ecs.put_account_setting(name=serviceLongArnFormat, value = \"enabled\")"
+    # test_str = "aws.list_code_signing_configs()"
+    # check_string(test_str)

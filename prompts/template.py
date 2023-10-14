@@ -110,3 +110,14 @@ Examples:
 <<<EXAMPLE_API_CALL>>>
 <Response>
 """
+
+fix_response_to_python = """
+Return the given API Call (terminal command/function call) in the correct Python function calling format with the correct Python syntax given the following example:
+
+Examples:
+<<<EXAMPLES>>>
+
+<API Call>
+<<<EXAMPLE_API_CALL>>>
+<Response>
+"""

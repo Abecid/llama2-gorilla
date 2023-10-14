@@ -7,16 +7,18 @@ import re
 from prompts import template
 from prompts import example as prompt_examples
 import openai_api
+import check
 
 conda = "openai_conda-2023Jun12.json"
 linux = "openai_linux-2023Jun13.json"
 rapidAPI = "rapidAPI-api_09_30_gpt_3_5_turbo.json"
 aws = "aws-cli-2023_09_29_gpt_3_5_turbo.json"
+output_aws = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned.json"
 
 inputs = [conda, linux]
 
 model = "gpt-3.5-turbo"
-# model = "gpt-4"
+model = "gpt-4"
 
 model_clean_name = model.replace(".", "-").replace("/", "_").replace(" ", "_").replace("-", "_")
 
@@ -26,6 +28,47 @@ OpenAI_API = openai_api.OpenAI_API(model=model)
 def string_to_dict(s):
     s = "{" + s + "}"
     return json.loads(s.replace("\\", "").replace("'", "\""))
+
+def get_fixed_python_response(model_answer):
+    prompt = template.fix_response_to_python.replace("<<<EXAMPLE_API_CALL>>>", model_answer).replace("<<<EXAMPLES>>>", prompt_examples.FIX_RESPONSE_TO_PYTHON)
+            
+    response = OpenAI_API.chatgpt(prompt).strip()
+    return response
+
+def get_fixed_response(model_answer, index):
+    i = 0
+    while not check.is_parsable(model_answer):
+        if i >= 1:
+            print(f"{index}-{i+1}. Model Answer Not Parsable: {model_answer}")
+        model_answer = get_fixed_python_response(model_answer)
+        i += 1
+        if i > 2:
+            return False, model_answer
+    return True, model_answer
+            
+
+def fix_python_parsable(data, clean_input_name):
+    new_data = []
+    skipped_data = []
+    for index, json_object in enumerate(tqdm(data)):
+        json_object['model_answer'] = json_object['model_answer'].replace("-", "_")
+        no_error, json_object['model_answer'] = get_fixed_response(json_object['model_answer'], index)
+        
+        if no_error is False:
+            skipped_data.append(json_object)
+        else:
+            new_data.append(json_object)
+    
+    print(f"Number of skipped examples: {len(skipped_data)}/{len(data)}")
+    now = datetime.now()
+    # Convert to string format
+    date_string = now.strftime('%m_%d_%H_%M')
+    
+    with open(f'output/{clean_input_name}_{date_string}.json', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
+        
+    with open(f'output/{clean_input_name}_{date_string}_skipped.json', 'w') as jsonfile:
+        json.dump(skipped_data, jsonfile, indent=4)
 
 def fix_aws(data, clean_input_name, max=-1):
     output_data = []
@@ -279,11 +322,15 @@ def fix_file(data, clean_input_name):
 
 def main():
     # input_file = rapidAPI
-    input_file = aws
-    data = json.load(open(f'input/{input_file}'))
-    clean_input_name = input_file.split(".")[0]
+    # input_file = aws
+    # data = json.load(open(f'input/{input_file}'))
+    # clean_input_name = input_file.split(".")[0]
     # fix_file(data, clean_input_name)
-    fix_aws(data, clean_input_name)
+    # fix_aws(data, clean_input_name)
+    
+    data = json.load(open(f'output/{output_aws}'))
+    clean_input_name = output_aws.split(".")[0]
+    fix_python_parsable(data, clean_input_name)
     
 
 if __name__ == "__main__":

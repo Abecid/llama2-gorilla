@@ -172,3 +172,14 @@ aws.kinesis.describe-stream-summary(stream-name=samplestream)
 aws.kinesis.describe-stream-summary
 stream-name; samplestream
 """
+
+FIX_RESPONSE_TO_PYTHON = """
+<API call>
+aws.lambda.list-code-signing-configs
+<Response>
+aws.lambda.list_code_signing_configs()
+<API call>
+aws.emr-containers.list-job-runs --virtual-cluster-id VC-123 --created-after 2022-01-01 --states COMPLETED
+<Response>
+aws.emr_containers.list_job-runs(virtual_cluster_id="VC-123", created_after="2022-01-01", states="COMPLETED")
+"""

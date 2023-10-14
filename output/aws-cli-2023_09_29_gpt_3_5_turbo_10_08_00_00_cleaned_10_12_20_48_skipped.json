@@ -1,0 +1,246 @@
+[
+    {
+        "query": "I want to list all code signing configurations on AWS Lambda.",
+        "model_answer": "aws.lambda.list_code_signing_configs()",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Returns a list of code signing configurations . A request returns up to 10,000 configurations per call. You can use the MaxItems parameter to return fewer configurations per call.list-code-signing-configs is a paginated operation. Multiple API calls may be issued in order to retrieve the entire data set of results. You can disable pagination by providing the --no-paginate argument.",
+            "api_name": "aws.lambda.list-code-signing-configs",
+            "api_call": "aws lambda list-code-signing-configs [OPTIONS]",
+            "api_arguments": [],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [],
+            "output": {
+                "NextMarker -> (string)": "\nThe pagination token that\u00e2\u0080\u0099s included if more results are available.",
+                "CodeSigningConfigs -> (list)": "\nThe code signing configurations\n(structure)\n\nDetails about a Code signing configuration .\nCodeSigningConfigId -> (string)\n\nUnique identifer for the Code signing configuration.\nCodeSigningConfigArn -> (string)\n\nThe Amazon Resource Name (ARN) of the Code signing configuration.\nDescription -> (string)\n\nCode signing configuration description.\nAllowedPublishers -> (structure)\n\nList of allowed publishers.\nSigningProfileVersionArns -> (list)\n\nThe Amazon Resource Name (ARN) for each of the signing profiles. A signing profile defines a trusted user who can sign a code package.\n(string)\n\n\nCodeSigningPolicies -> (structure)\n\nThe code signing policy controls the validation failure action for signature mismatch or expiry.\nUntrustedArtifactOnDeployment -> (string)\n\nCode signing configuration policy for deployment validation failure. If you set the policy to Enforce , Lambda blocks the deployment request if signature validation checks fail. If you set the policy to Warn , Lambda allows the deployment and creates a CloudWatch log.\nDefault value: Warn\n\n\nLastModified -> (string)\n\nThe date and time that the Code signing configuration was last modified, in ISO-8601 format (YYYY-MM-DDThh:mm:ss.sTZD).\n\n"
+            },
+            "api_name_original": "list-code-signing-configs",
+            "api_arguments_original": {
+                "--max-items ": "\nThe total number of items to return in the command\u00e2\u0080\u0099s output. If the total number of items available is more than the value specified, a NextToken is provided in the command\u00e2\u0080\u0099s output. To resume pagination, provide the NextToken value in the starting-token argument of a subsequent command. Do not use the NextToken response element directly outside of the AWS CLI.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+                "--starting-token ": "\nA token to specify where to start paginating. This is the NextToken from a previously truncated response.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+                "--page-size ": "\nThe size of each page to get in the AWS service call. This does not affect the number of items returned in the command\u00e2\u0080\u0099s output. Setting a smaller page size results in more calls to the AWS service, retrieving fewer items in each call. This can help prevent the AWS service calls from timing out.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n"
+            }
+        }
+    },
+    {
+        "query": "Can you please retrieve the account settings for my AWS Lambda functions?",
+        "model_answer": "aws.lambda.get_account_settings()",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Retrieves details about your account\u00e2\u0080\u0099s limits and usage in an Amazon Web Services Region.",
+            "api_name": "aws.lambda.get-account-settings",
+            "api_call": "aws lambda get-account-settings [OPTIONS]",
+            "api_arguments": [],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [
+                "aws lambda get-account-settings\n"
+            ],
+            "output": {
+                "AccountLimit -> (structure)": "\nLimits that are related to concurrency and code storage.\nTotalCodeSize -> (long)\n\nThe amount of storage space that you can use for all deployment packages and layer archives.\nCodeSizeUnzipped -> (long)\n\nThe maximum size of a function\u00e2\u0080\u0099s deployment package and layers when they\u00e2\u0080\u0099re extracted.\nCodeSizeZipped -> (long)\n\nThe maximum size of a deployment package when it\u00e2\u0080\u0099s uploaded directly to Lambda. Use Amazon S3 for larger files.\nConcurrentExecutions -> (integer)\n\nThe maximum number of simultaneous function executions.\nUnreservedConcurrentExecutions -> (integer)\n\nThe maximum number of simultaneous function executions, minus the capacity that\u00e2\u0080\u0099s reserved for individual functions with  PutFunctionConcurrency .\n",
+                "AccountUsage -> (structure)": "\nThe number of functions and amount of storage in use.\nTotalCodeSize -> (long)\n\nThe amount of storage space, in bytes, that\u00e2\u0080\u0099s being used by deployment packages and layer archives.\nFunctionCount -> (long)\n\nThe number of Lambda functions.\n"
+            },
+            "api_name_original": "get-account-settings",
+            "api_arguments_original": {}
+        }
+    },
+    {
+        "query": "I want to remove the tag with key \"Purpose\" and value \"Website\" from a certificate authority with the ARN \"arn:aws:acm-pca:us-west-2:123456789012:certificate-authority/12345678-1234-1234-1234-123456789012\" on AWS ACM Private Certificate Authority.",
+        "model_answer": "The response is:\n\n```python\naws.acm_pca.untag_certificate_authority(certificate_authority_arn=\"arn:aws:acm_pca:us_west_2:123456789012:certificate_authority/12345678_1234_1234_1234_123456789012\", tags=[{\"Key\"}])\n```",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Remove one or more tags from your private CA. A tag consists of a key-value pair. If you do not specify the value portion of the tag when calling this action, the tag will be removed regardless of value. If you specify a value, the tag is removed only if it is associated with the specified value. To add tags to a private CA, use the TagCertificateAuthority . Call the ListTags action to see what tags are associated with your CA.",
+            "api_name": "aws.acm_pca.untag_certificate_authority",
+            "api_call": "aws acm-pca untag-certificate-authority [OPTIONS]",
+            "api_arguments": [
+                {
+                    "name": "tags",
+                    "value": "[{\"Key\"",
+                    "description": "\nList of tags to be removed from the CA.\n(structure)\n\nTags are labels that you can use to identify and organize your private CAs. Each tag consists of a key and an optional value. You can associate up to 50 tags with a private CA. To add one or more tags to a private CA, call the TagCertificateAuthority action. To remove a tag, call the UntagCertificateAuthority action.\nKey -> (string)\n\nKey (name) of the tag.\nValue -> (string)\n\nValue of the tag.\n\n"
+                }
+            ],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [
+                "aws acm-pca untag-certificate-authority --certificate-authority-arn arn:aws:acm-pca:us-west-2:123456789012:certificate-authority/12345678-1234-1234-1234-123456789012 --tags Key=Purpose,Value=Website\n"
+            ],
+            "output": {},
+            "api_name_original": "untag-certificate-authority",
+            "api_arguments_original": {
+                "--certificate-authority-arn ": "\nThe Amazon Resource Name (ARN) that was returned when you called CreateCertificateAuthority . This must be of the form:\n\n``arn:aws:acm-pca:region :account :certificate-authority/12345678-1234-1234-1234-123456789012 ``\n",
+                "--tags ": "\nList of tags to be removed from the CA.\n(structure)\n\nTags are labels that you can use to identify and organize your private CAs. Each tag consists of a key and an optional value. You can associate up to 50 tags with a private CA. To add one or more tags to a private CA, call the TagCertificateAuthority action. To remove a tag, call the UntagCertificateAuthority action.\nKey -> (string)\n\nKey (name) of the tag.\nValue -> (string)\n\nValue of the tag.\n\n"
+            }
+        }
+    },
+    {
+        "query": "I want to get the version-specific settings of a Lambda function named my-function:2.",
+        "model_answer": "aws.lambda.get_function_configuration(function_name=\"my_function:2\")",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Returns the version-specific settings of a Lambda function or version. The output includes only options that can vary between versions of a function. To modify these settings, use  UpdateFunctionConfiguration .See also: AWS API Documentation\n",
+            "api_name": "aws.lambda.get-function-configuration",
+            "api_call": "aws lambda get-function-configuration [OPTIONS]",
+            "api_arguments": [
+                {
+                    "name": "function-name",
+                    "value": "my-function:2",
+                    "description": "\nThe name of the Lambda function, version, or alias.\n\nName formats\n\nFunction name \u00e2\u0080\u0093 my-function (name-only), my-function:v1 (with alias).\nFunction ARN \u00e2\u0080\u0093 arn:aws:lambda:us-west-2:123456789012:function:my-function .\nPartial ARN \u00e2\u0080\u0093 123456789012:function:my-function .\n\nYou can append a version number or alias to any of the formats. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n"
+                }
+            ],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [
+                "aws lambda get-function-configuration     --function-name  my-function:2\n"
+            ],
+            "output": {
+                "FunctionName -> (string)": "\nThe name of the function.",
+                "FunctionArn -> (string)": "\nThe function\u00e2\u0080\u0099s Amazon Resource Name (ARN).",
+                "Runtime -> (string)": "\nThe identifier of the function\u00e2\u0080\u0099s runtime . Runtime is required if the deployment package is a .zip file archive.\nThe following list includes deprecated runtimes. For more information, see Runtime deprecation policy .\n",
+                "Role -> (string)": "\nThe function\u00e2\u0080\u0099s execution role.",
+                "Handler -> (string)": "\nThe function that Lambda calls to begin running your function.",
+                "CodeSize -> (long)": "\nThe size of the function\u00e2\u0080\u0099s deployment package, in bytes.",
+                "Description -> (string)": "\nThe function\u00e2\u0080\u0099s description.",
+                "Timeout -> (integer)": "\nThe amount of time in seconds that Lambda allows a function to run before stopping it.",
+                "MemorySize -> (integer)": "\nThe amount of memory available to the function at runtime.",
+                "LastModified -> (string)": "\nThe date and time that the function was last updated, in ISO-8601 format (YYYY-MM-DDThh:mm:ss.sTZD).",
+                "CodeSha256 -> (string)": "\nThe SHA256 hash of the function\u00e2\u0080\u0099s deployment package.",
+                "Version -> (string)": "\nThe version of the Lambda function.",
+                "VpcConfig -> (structure)": "\nThe function\u00e2\u0080\u0099s networking configuration.\nSubnetIds -> (list)\n\nA list of VPC subnet IDs.\n(string)\n\nSecurityGroupIds -> (list)\n\nA list of VPC security group IDs.\n(string)\n\nVpcId -> (string)\n\nThe ID of the VPC.\n",
+                "DeadLetterConfig -> (structure)": "\nThe function\u00e2\u0080\u0099s dead letter queue.\nTargetArn -> (string)\n\nThe Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.\n",
+                "Environment -> (structure)": "\nThe function\u00e2\u0080\u0099s environment variables . Omitted from CloudTrail logs.\nVariables -> (map)\n\nEnvironment variable key-value pairs. Omitted from CloudTrail logs.\nkey -> (string)\nvalue -> (string)\n\nError -> (structure)\n\nError messages for environment variables that couldn\u00e2\u0080\u0099t be applied.\nErrorCode -> (string)\n\nThe error code.\nMessage -> (string)\n\nThe error message.\n\n",
+                "KMSKeyArn -> (string)": "\nThe KMS key that\u00e2\u0080\u0099s used to encrypt the function\u00e2\u0080\u0099s environment variables . When Lambda SnapStart is activated, this key is also used to encrypt the function\u00e2\u0080\u0099s snapshot. This key is returned only if you\u00e2\u0080\u0099ve configured a customer managed key.",
+                "TracingConfig -> (structure)": "\nThe function\u00e2\u0080\u0099s X-Ray tracing configuration.\nMode -> (string)\n\nThe tracing mode.\n",
+                "MasterArn -> (string)": "\nFor Lambda@Edge functions, the ARN of the main function.",
+                "RevisionId -> (string)": "\nThe latest updated revision of the function or alias.",
+                "Layers -> (list)": "\nThe function\u00e2\u0080\u0099s layers .\n(structure)\n\nAn Lambda layer .\nArn -> (string)\n\nThe Amazon Resource Name (ARN) of the function layer.\nCodeSize -> (long)\n\nThe size of the layer archive in bytes.\nSigningProfileVersionArn -> (string)\n\nThe Amazon Resource Name (ARN) for a signing profile version.\nSigningJobArn -> (string)\n\nThe Amazon Resource Name (ARN) of a signing job.\n\n",
+                "State -> (string)": "\nThe current state of the function. When the state is Inactive , you can reactivate the function by invoking it.",
+                "StateReason -> (string)": "\nThe reason for the function\u00e2\u0080\u0099s current state.",
+                "StateReasonCode -> (string)": "\nThe reason code for the function\u00e2\u0080\u0099s current state. When the code is Creating , you can\u00e2\u0080\u0099t invoke or modify the function.",
+                "LastUpdateStatus -> (string)": "\nThe status of the last update that was performed on the function. This is first set to Successful after function creation completes.",
+                "LastUpdateStatusReason -> (string)": "\nThe reason for the last update that was performed on the function.",
+                "LastUpdateStatusReasonCode -> (string)": "\nThe reason code for the last update that was performed on the function.",
+                "FileSystemConfigs -> (list)": "\nConnection settings for an Amazon EFS file system .\n(structure)\n\nDetails about the connection between a Lambda function and an Amazon EFS file system .\nArn -> (string)\n\nThe Amazon Resource Name (ARN) of the Amazon EFS access point that provides access to the file system.\nLocalMountPath -> (string)\n\nThe path where the function can access the file system, starting with /mnt/ .\n\n",
+                "PackageType -> (string)": "\nThe type of deployment package. Set to Image for container image and set Zip for .zip file archive.",
+                "ImageConfigResponse -> (structure)": "\nThe function\u00e2\u0080\u0099s image configuration values.\nImageConfig -> (structure)\n\nConfiguration values that override the container image Dockerfile.\nEntryPoint -> (list)\n\nSpecifies the entry point to their application, which is typically the location of the runtime executable.\n(string)\n\nCommand -> (list)\n\nSpecifies parameters that you want to pass in with ENTRYPOINT.\n(string)\n\nWorkingDirectory -> (string)\n\nSpecifies the working directory.\n\nError -> (structure)\n\nError response to GetFunctionConfiguration .\nErrorCode -> (string)\n\nError code.\nMessage -> (string)\n\nError message.\n\n",
+                "SigningProfileVersionArn -> (string)": "\nThe ARN of the signing profile version.",
+                "SigningJobArn -> (string)": "\nThe ARN of the signing job.",
+                "Architectures -> (list)": "\nThe instruction set architecture that the function supports. Architecture is a string array with one of the valid values. The default architecture value is x86_64 .\n(string)\n",
+                "EphemeralStorage -> (structure)": "\nThe size of the function\u00e2\u0080\u0099s /tmp directory in MB. The default value is 512, but it can be any whole number between 512 and 10,240 MB.\nSize -> (integer)\n\nThe size of the function\u00e2\u0080\u0099s /tmp directory.\n",
+                "SnapStart -> (structure)": "\nSet ApplyOn to PublishedVersions to create a snapshot of the initialized execution environment when you publish a function version. For more information, see Improving startup performance with Lambda SnapStart .\nApplyOn -> (string)\n\nWhen set to PublishedVersions , Lambda creates a snapshot of the execution environment when you publish a function version.\nOptimizationStatus -> (string)\n\nWhen you provide a qualified Amazon Resource Name (ARN) , this response element indicates whether SnapStart is activated for the specified function version.\n",
+                "RuntimeVersionConfig -> (structure)": "\nThe ARN of the runtime and any errors that occured.\nRuntimeVersionArn -> (string)\n\nThe ARN of the runtime version you want the function to use.\nError -> (structure)\n\nError response when Lambda is unable to retrieve the runtime version for a function.\nErrorCode -> (string)\n\nThe error code.\nMessage -> (string)\n\nThe error message.\n\n"
+            },
+            "api_name_original": "get-function-configuration",
+            "api_arguments_original": {
+                "--function-name ": "\nThe name of the Lambda function, version, or alias.\n\nName formats\n\nFunction name \u00e2\u0080\u0093 my-function (name-only), my-function:v1 (with alias).\nFunction ARN \u00e2\u0080\u0093 arn:aws:lambda:us-west-2:123456789012:function:my-function .\nPartial ARN \u00e2\u0080\u0093 123456789012:function:my-function .\n\nYou can append a version number or alias to any of the formats. The length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n",
+                "--qualifier ": "\nSpecify a version or alias to get details about a published version of the function."
+            }
+        }
+    },
+    {
+        "query": "I want to list all the aliases for a Lambda function named my-function on AWS Lambda.",
+        "model_answer": "aws.lambda.list_aliases(function_name=\"my_function\")",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Returns a list of aliases for a Lambda function.list-aliases is a paginated operation. Multiple API calls may be issued in order to retrieve the entire data set of results. You can disable pagination by providing the --no-paginate argument.",
+            "api_name": "aws.lambda.list_aliases",
+            "api_call": "aws lambda list-aliases [OPTIONS]",
+            "api_arguments": [
+                {
+                    "name": "function-name",
+                    "value": "my-function",
+                    "description": "\nThe name of the Lambda function.\n\nName formats\n\nFunction name - MyFunction .\nFunction ARN - arn:aws:lambda:us-west-2:123456789012:function:MyFunction .\nPartial ARN - 123456789012:function:MyFunction .\n\nThe length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n"
+                }
+            ],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [
+                "aws lambda list-aliases     --function-name my-function\n"
+            ],
+            "output": {
+                "NextMarker -> (string)": "\nThe pagination token that\u00e2\u0080\u0099s included if more results are available.",
+                "Aliases -> (list)": "\nA list of aliases.\n(structure)\n\nProvides configuration information about a Lambda function alias .\nAliasArn -> (string)\n\nThe Amazon Resource Name (ARN) of the alias.\nName -> (string)\n\nThe name of the alias.\nFunctionVersion -> (string)\n\nThe function version that the alias invokes.\nDescription -> (string)\n\nA description of the alias.\nRoutingConfig -> (structure)\n\nThe routing configuration of the alias.\nAdditionalVersionWeights -> (map)\n\nThe second version, and the percentage of traffic that\u00e2\u0080\u0099s routed to it.\nkey -> (string)\nvalue -> (double)\n\n\nRevisionId -> (string)\n\nA unique identifier that changes when you update the alias.\n\n"
+            },
+            "api_name_original": "list-aliases",
+            "api_arguments_original": {
+                "--function-name ": "\nThe name of the Lambda function.\n\nName formats\n\nFunction name - MyFunction .\nFunction ARN - arn:aws:lambda:us-west-2:123456789012:function:MyFunction .\nPartial ARN - 123456789012:function:MyFunction .\n\nThe length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n",
+                "--function-version ": "\nSpecify a function version to only list aliases that invoke that version.",
+                "--max-items ": "\nThe total number of items to return in the command\u00e2\u0080\u0099s output. If the total number of items available is more than the value specified, a NextToken is provided in the command\u00e2\u0080\u0099s output. To resume pagination, provide the NextToken value in the starting-token argument of a subsequent command. Do not use the NextToken response element directly outside of the AWS CLI.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+                "--starting-token ": "\nA token to specify where to start paginating. This is the NextToken from a previously truncated response.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+                "--page-size ": "\nThe size of each page to get in the AWS service call. This does not affect the number of items returned in the command\u00e2\u0080\u0099s output. Setting a smaller page size results in more calls to the AWS service, retrieving fewer items in each call. This can help prevent the AWS service calls from timing out.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n"
+            }
+        }
+    },
+    {
+        "query": "I want to tag a lambda function with the ARN \"arn:aws:lambda:us-west-2:123456789012:function:my-function\" with the tags \"DEPARTMENT=Department A\".",
+        "model_answer": "aws.lambda.tag_resource(resource=\"arn:aws:lambda:us_west_2:123456789012:function:my_function\", tags=\"DEPARTMENT=Department A\")",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Adds tags to a function.",
+            "api_name": "aws.lambda.tag-resource",
+            "api_call": "aws lambda tag-resource [OPTIONS]",
+            "api_arguments": [
+                {
+                    "name": "resource",
+                    "value": "arn:aws:lambda:us-west-2:123456789012:function:my-function",
+                    "description": "\nThe function\u00e2\u0080\u0099s Amazon Resource Name (ARN)."
+                },
+                {
+                    "name": "tags",
+                    "value": "\"DEPARTMENT=Department A\"",
+                    "description": "\nA list of tags to apply to the function.\nkey -> (string)\nvalue -> (string)\n"
+                }
+            ],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [
+                "aws lambda tag-resource     --resource arn:aws:lambda:us-west-2:123456789012:function:my-function     --tags \"DEPARTMENT=Department A\"\n"
+            ],
+            "output": {},
+            "api_name_original": "tag-resource",
+            "api_arguments_original": {
+                "--resource ": "\nThe function\u00e2\u0080\u0099s Amazon Resource Name (ARN).",
+                "--tags ": "\nA list of tags to apply to the function.\nkey -> (string)\nvalue -> (string)\n"
+            }
+        }
+    },
+    {
+        "query": "I want to delete the function code signing configuration for a Lambda function named my-function.",
+        "model_answer": "aws.lambda.delete_function_code_signing_config(function_name=\"my_function\")",
+        "original": {
+            "domain": "Cloud Infrastructure",
+            "framework": "aws",
+            "functionality": "Removes the code signing configuration from the function.",
+            "api_name": "aws.lambda.delete-function-code-signing-config",
+            "api_call": "aws lambda delete-function-code-signing-config [OPTIONS]",
+            "api_arguments": [
+                {
+                    "name": "function-name",
+                    "value": "my-function",
+                    "description": "\nThe name of the Lambda function.\n\nName formats\n\nFunction name - MyFunction .\nFunction ARN - arn:aws:lambda:us-west-2:123456789012:function:MyFunction .\nPartial ARN - 123456789012:function:MyFunction .\n\nThe length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n"
+                }
+            ],
+            "python_environment_requirements": [
+                "aws"
+            ],
+            "example_code": [],
+            "output": {},
+            "api_name_original": "delete-function-code-signing-config",
+            "api_arguments_original": {
+                "--function-name ": "\nThe name of the Lambda function.\n\nName formats\n\nFunction name - MyFunction .\nFunction ARN - arn:aws:lambda:us-west-2:123456789012:function:MyFunction .\nPartial ARN - 123456789012:function:MyFunction .\n\nThe length constraint applies only to the full ARN. If you specify only the function name, it is limited to 64 characters in length.\n"
+            }
+        }
+    }
+]

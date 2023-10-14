@@ -1,5 +1,12 @@
-1. Prompt with in-context examples and change the prompt to generate queries that mention the parameters that the api requires (include in-context examples)
-2. Check samples (quality and accuracy)
-3. self-check on output
-  a. Whether arguments are mentioned in the query
-4. Try Rapid API
+api_arguments
+url
+headers
+params
+
+model answer
+
+To fix
+- some urls have parameters embedded (postman)
+- API Arguments
+- API name
+Try Rapid API
