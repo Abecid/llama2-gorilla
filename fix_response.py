@@ -18,7 +18,7 @@ output_aws = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned.json"
 inputs = [conda, linux]
 
 model = "gpt-3.5-turbo"
-model = "gpt-4"
+# model = "gpt-4"
 
 model_clean_name = model.replace(".", "-").replace("/", "_").replace(" ", "_").replace("-", "_")
 
@@ -28,6 +28,12 @@ OpenAI_API = openai_api.OpenAI_API(model=model)
 def string_to_dict(s):
     s = "{" + s + "}"
     return json.loads(s.replace("\\", "").replace("'", "\""))
+
+def fix_additional(input_filepath):
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    for 
+    
 
 def fix_value_to_enum(input_filepath):
     with open(input_filepath, 'r') as file:
@@ -56,8 +62,38 @@ def fix_value_to_enum(input_filepath):
         json.dump(data, jsonfile, indent=4)
     
 
-def create_additional_examples():
-    pass
+def create_additional_examples(input_filepath):
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    
+    new_data = []
+    
+    for index, example in tqdm(enumerate(data), desc='Processing data'):
+        try:
+            prompt = template.create_additional_queries.replace("<<<DICT>>>", json.dumps(example, indent=4)).replace("<<<EXAMPLES>>>", prompt_examples.SYNTHETIC_REQUEST_GENERATION)
+            response = OpenAI_API.chatgpt(prompt)
+            new_query = response.split("\n")[0]
+            model_answer_inddex = response.find("<New Model Answer>")
+            arguemnt_index = response.find("<Arguments>")
+            model_answer = response[model_answer_inddex:arguemnt_index].replace("<New Model Answer>", "").strip()
+            argument = response[arguemnt_index:].replace("<Arguments>", "").strip()
+            arguments = argument.split(";")
+            arguments = [{a.split(':')[0].strip():a.split(':')[1].strip()} for a in arguments if ':' in a]
+            
+            example['query'] = new_query
+            example['model_answer'] = model_answer
+            example['original']['api_arguments'] = arguments
+            new_data.append(example)
+        except Exception as e:
+            print(f"{index}. {e}")
+            continue
+    
+    new_input_filepath = input_filepath.replace(".json", "_additional.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
+        
+        
+    
 
 def get_fixed_python_response(model_answer):
     prompt = template.fix_response_to_python.replace("<<<EXAMPLE_API_CALL>>>", model_answer).replace("<<<EXAMPLES>>>", prompt_examples.FIX_RESPONSE_TO_PYTHON)
@@ -363,10 +399,12 @@ def main():
     # fix_python_parsable(data, clean_input_name)
     
     latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48.json"
-    fix_value_to_enum(latest_aws)
+    create_additional_examples(latest_aws)
+    # fix_value_to_enum(latest_aws)
     
     latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned.json"
-    fix_value_to_enum(latset_rapid)
+    create_additional_examples(latset_rapid)
+    # fix_value_to_enum(latset_rapid)
     
 
 if __name__ == "__main__":

@@ -183,3 +183,134 @@ aws.emr-containers.list-job-runs --virtual-cluster-id VC-123 --created-after 202
 <Response>
 aws.emr_containers.list_job-runs(virtual_cluster_id="VC-123", created_after="2022-01-01", states="COMPLETED")
 """
+
+SYNTHETIC_REQUEST_GENERATION = """
+<DICT1>
+{
+    "query": "I want to create a new user with the name John Doe in an organization with the ID org1234 in AWS WorkMail.",
+    "model_answer": "aws.workmail.create_user(organization_id=\"org1234\", name=\"John Doe\", display_name=\"John Doe\", password=\"abcd1234\")",
+    "original": {
+        "domain": "Cloud Infrastructure",
+        "framework": "aws",
+        "functionality": "Creates a user who can be used in WorkMail by calling the  RegisterToWorkMail operation.",
+        "api_name": "aws.workmail.create-user",
+        "api_call": "aws workmail create-user [OPTIONS]",
+        "api_arguments": [
+            {
+                "name": "organization-id",
+                "description": "\nThe identifier of the organization for which the user is created.",
+                "enum": [
+                    "org1234"
+                ]
+            },
+            {
+                "name": "name",
+                "description": "\nThe name for the new user. WorkMail directory user names have a maximum length of 64. All others have a maximum length of 20.",
+                "enum": [
+                    "John Doe"
+                ]
+            },
+            {
+                "name": "display-name",
+                "description": "\nThe display name for the new user.",
+                "enum": [
+                    "John Doe"
+                ]
+            },
+            {
+                "name": "password",
+                "description": "\nThe password for the new user.",
+                "enum": [
+                    "abcd1234"
+                ]
+            }
+        ],
+        "python_environment_requirements": [
+            "aws"
+        ],
+        "example_code": [
+            "aws workmail create-user     --organization-id m-d281d0a2fd824be5b6cd3d3ce909fd27     --name exampleName     --display-name exampleDisplayName     --password examplePa$$w0rd\n"
+        ],
+        "output": {
+            "UserId -> (string)": "\nThe identifier for the new user."
+        },
+        "api_name_original": "create-user",
+        "api_arguments_original": {
+            "--organization-id ": "\nThe identifier of the organization for which the user is created.",
+            "--name ": "\nThe name for the new user. WorkMail directory user names have a maximum length of 64. All others have a maximum length of 20.",
+            "--display-name ": "\nThe display name for the new user.",
+            "--password ": "\nThe password for the new user."
+        }
+    }
+}
+<New Query>
+I want to create a new user with the name Jane Smith, a display name of Jane S, in an organization with the ID org5678, and set the password to 'securePass123' in AWS WorkMail."
+<New Model Answer>
+aws.workmail.create_user(organization_id="org5678", name="Jane Smith", display_name="Jane S", password="securePass123")
+<Arguments>
+organization-id:org5678;name:Jane Smith;display_name:Jane S;password:securePass123
+
+<DICT2>
+{
+    "query": "I want to list all the entitlements for my AWS account.",
+    "model_answer": "aws.mediaconnect.list_entitlements()",
+    "original": {
+        "domain": "Cloud Infrastructure",
+        "framework": "aws",
+        "functionality": "Displays a list of all entitlements that have been granted to this account. This request returns 20 results per page.list-entitlements is a paginated operation. Multiple API calls may be issued in order to retrieve the entire data set of results. You can disable pagination by providing the --no-paginate argument.",
+        "api_name": "aws.mediaconnect.list_entitlements",
+        "api_call": "aws mediaconnect list-entitlements [OPTIONS]",
+        "api_arguments": [],
+        "python_environment_requirements": [
+            "aws"
+        ],
+        "example_code": [
+            "aws mediaconnect list-entitlements\n"
+        ],
+        "output": {
+            "Entitlements -> (list)": "\nA list of entitlements that have been granted to you from other AWS accounts.\n(structure)\n\nAn entitlement that has been granted to you from other AWS accounts.\nDataTransferSubscriberFeePercent -> (integer)\n\nPercentage from 0-100 of the data transfer cost to be billed to the subscriber.\nEntitlementArn -> (string)\n\nThe ARN of the entitlement.\nEntitlementName -> (string)\n\nThe name of the entitlement.\n\n",
+            "NextToken -> (string)": "\nThe token that identifies which batch of results that you want to see. For example, you submit a ListEntitlements request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the ListEntitlements request a second time and specify the NextToken value."
+        },
+        "api_name_original": "list-entitlements",
+        "api_arguments_original": {
+            "--starting-token ": "\nA token to specify where to start paginating. This is the NextToken from a previously truncated response.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+            "--page-size ": "\nThe size of each page to get in the AWS service call. This does not affect the number of items returned in the command\u00e2\u0080\u0099s output. Setting a smaller page size results in more calls to the AWS service, retrieving fewer items in each call. This can help prevent the AWS service calls from timing out.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n"
+        }
+    }
+}
+<New Query>
+I want to list the entitlements for my AWS account but retrieve the results in smaller pages of 5 items each.
+<New Model Answer>
+aws.mediaconnect.list_entitlements(page_size=5)
+<Arguments>
+page-size:5
+
+<DICT3>
+{
+    "query": "What are the available powers for an Amazon Lightsail container service?",
+    "model_answer": "aws.lightsail.get_container_service_powers()",
+    "original": {
+        "domain": "Cloud Infrastructure",
+        "framework": "aws",
+        "functionality": "Returns the list of powers that can be specified for your Amazon Lightsail container services.See also: AWS API Documentation\n",
+        "api_name": "aws.lightsail.get-container-service-powers",
+        "api_call": "aws lightsail get-container-service-powers [OPTIONS]",
+        "api_arguments": [],
+        "python_environment_requirements": [
+            "aws"
+        ],
+        "example_code": [],
+        "output": {
+            "powers -> (list)": "\nAn array of objects that describe the powers that can be specified for a container service.\n(structure)\n\nDescribes the powers that can be specified for an Amazon Lightsail container service.\nThe power specifies the amount of RAM, the number of vCPUs, and the base price of the container service.\npowerId -> (string)\n\nThe ID of the power (e.g., nano-1 ).\nprice -> (float)\n\nThe monthly price of the power in USD.\ncpuCount -> (float)\n\nThe number of vCPUs included in the power.\nramSizeInGb -> (float)\n\nThe amount of RAM (in GB) of the power.\nname -> (string)\n\nThe friendly name of the power (e.g., nano ).\nisActive -> (boolean)\n\nA Boolean value indicating whether the power is active and can be specified for container services.\n\n"
+        },
+        "api_name_original": "get-container-service-powers",
+        "api_arguments_original": {}
+    }
+}
+<New Query>
+Can you provide a Python function call to obtain the available power options for Lightsail container services and log the output, considering that we might want to automate a monthly check and get notified about possible updates or changes in the power options?
+<New Model Answer>
+aws.lightsail.get_container_service_powers()
+<Arguments>
+None
+"""
