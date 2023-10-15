@@ -29,10 +29,87 @@ def string_to_dict(s):
     s = "{" + s + "}"
     return json.loads(s.replace("\\", "").replace("'", "\""))
 
-def fix_additional(input_filepath):
+def fix_rapidapi_arguments(input_filepath):
+    pass
+
+def fix_lastchar(input_filepath):
+    new_data = []
     with open(input_filepath, 'r') as file:
         data = json.load(file)
-    for 
+    for object in data:
+        model_answer = object["model_answer"]
+        
+        pattern = re.compile(r'(\w+)=["\']?([^"\']+)["\']?')
+        # Finding all matches
+        matches = pattern.findall(model_answer)
+
+        # Extracting to dictionary
+        parameters = {key: value for key, value in matches}
+
+        if not parameters:
+            continue
+        
+        
+        skip = False
+        for api_argument in object['original']['api_arguments']:
+            found = False
+            for api_argument_original_key in object['original']['api_arguments_original'].keys():
+                if api_argument['name'] in api_argument_original_key:
+                    found = True
+                    break
+            if found == False:
+                skip = True
+                break
+        
+        if skip:
+            continue
+        
+        for api_argument in object['original']['api_arguments']:
+            if api_argument.get('value', None) is not None:
+                del api_argument['value']
+        
+        for api_argument in object['original']['api_arguments']:
+            if api_argument['name'] in parameters:
+                api_argument['enum'] = [parameters[api_argument['name']]]
+                break
+            
+        
+        new_data.append(object)
+        
+    new_input_filepath = input_filepath
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
+
+def fix_additional(input_filepath, rapidAPI=False):
+    new_data = []
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    for object in data:
+        if len(object["model_answer"]) == 0:
+            continue
+        model_answer = object["model_answer"]
+        arguemnt_index = model_answer.find("<Arguments>")
+        object['model_answer'] = model_answer[:arguemnt_index].strip()
+        argument = model_answer[arguemnt_index:].replace("<Arguments>", "").strip()
+        
+        arguments = argument.split(";")
+        arguments = [{"name":a.split(':')[0].strip(), "enum":[a.split(':')[1].strip()]} for a in arguments if ':' in a]
+        for argument in arguments:
+            if rapidAPI is True:
+                for original_argument in object['original']['api_arguments_original']:
+                    if argument['name'] in original_argument['name']:
+                        argument['description'] = original_argument['description'].strip()
+                        break
+            else:
+                for original_argument_key in object['original']['api_arguments_original'].keys():
+                    if argument['name'] in original_argument_key:
+                        argument['description'] = object['original']['api_arguments_original'][original_argument_key]
+                        break
+        object['original']['api_arguments'] = arguments
+        new_data.append(object)
+    new_input_filepath = input_filepath.replace(".json", "_fixed.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
     
 
 def fix_value_to_enum(input_filepath):
@@ -398,12 +475,15 @@ def main():
     # clean_input_name = output_aws.split(".")[0]
     # fix_python_parsable(data, clean_input_name)
     
-    latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48.json"
-    create_additional_examples(latest_aws)
+    latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json"
+    fix_lastchar(latest_aws)
+    # fix_additional(latest_aws)
+    # create_additional_examples(latest_aws)
     # fix_value_to_enum(latest_aws)
     
-    latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned.json"
-    create_additional_examples(latset_rapid)
+    latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional.json"
+    # fix_additional(latset_rapid, rapidAPI=True)
+    # create_additional_examples(latset_rapid)
     # fix_value_to_enum(latset_rapid)
     
 
