@@ -121,3 +121,8 @@ Examples:
 <<<EXAMPLE_API_CALL>>>
 <Response>
 """
+
+create_aditional_queires = """
+Refer to the following API json, query example and create <<num>> additional queries and respective correct commands (or function calls) for the API
+
+"""

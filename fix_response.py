@@ -29,6 +29,36 @@ def string_to_dict(s):
     s = "{" + s + "}"
     return json.loads(s.replace("\\", "").replace("'", "\""))
 
+def fix_value_to_enum(input_filepath):
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    
+    # Issue 6: Loop directly over elements.
+    for example in tqdm(data, desc='Processing data'):  
+        for argument in example['original']['api_arguments']:
+            try:
+                # Issue 2: Fix incorrect indexing.
+                argument["enum"] = argument["value"]
+                # Remove the old key
+                del argument['value']
+                
+                # Check if 'enum' is not a list and convert it to a single-item list if needed.
+                if not isinstance(argument["enum"], list):
+                    argument["enum"] = [argument["enum"]]
+                    
+            # Issue 5: Handle possible exceptions (customize as needed).
+            except KeyError as e:
+                print(f"KeyError: {str(e)}")
+            except Exception as e:
+                print(f"Unexpected error: {str(e)}")
+    
+    with open(f'{input_filepath}', 'w') as jsonfile:
+        json.dump(data, jsonfile, indent=4)
+    
+
+def create_additional_examples():
+    pass
+
 def get_fixed_python_response(model_answer):
     prompt = template.fix_response_to_python.replace("<<<EXAMPLE_API_CALL>>>", model_answer).replace("<<<EXAMPLES>>>", prompt_examples.FIX_RESPONSE_TO_PYTHON)
             
@@ -328,9 +358,15 @@ def main():
     # fix_file(data, clean_input_name)
     # fix_aws(data, clean_input_name)
     
-    data = json.load(open(f'output/{output_aws}'))
-    clean_input_name = output_aws.split(".")[0]
-    fix_python_parsable(data, clean_input_name)
+    # data = json.load(open(f'output/{output_aws}'))
+    # clean_input_name = output_aws.split(".")[0]
+    # fix_python_parsable(data, clean_input_name)
+    
+    latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48.json"
+    fix_value_to_enum(latest_aws)
+    
+    latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned.json"
+    fix_value_to_enum(latset_rapid)
     
 
 if __name__ == "__main__":
