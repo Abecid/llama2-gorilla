@@ -3,6 +3,7 @@ import csv
 from tqdm import tqdm
 from datetime import datetime
 import re
+import ast
 
 from prompts import template
 from prompts import example as prompt_examples
@@ -29,8 +30,69 @@ def string_to_dict(s):
     s = "{" + s + "}"
     return json.loads(s.replace("\\", "").replace("'", "\""))
 
+def get_correct_model_answer_python(model_answer):
+    prompt = template.fix_response_to_python.replace("<<<EXAMPLE_API_CALL>>>", model_answer).replace("<<<EXAMPLES>>>", prompt_examples.FIX_RESPONSE_TO_PYTHON)
+            
+    response = OpenAI_API.chatgpt(prompt).strip()
+    return response
+
+def fix_model_answer(model_answer):
+    if len(model_answer) == 0:
+        return False
+    user_query_start = model_answer.find("User query")
+    arguments_start = model_answer.find("<Arguments>")
+    if user_query_start != -1:
+        model_answer = model_answer[:user_query_start].strip()
+    if arguments_start != -1:
+        model_answer = model_answer[:arguments_start].strip()
+    last_par = model_answer.find(")")
+    if last_par != -1 or ast.parse(model_answer) is not None:
+        while True:
+            # model_answer = model_answer[:last_par+1].strip()
+            model_answer = get_correct_model_answer_python(model_answer)
+            if ast.parse(model_answer) is not None:
+                break
+            
+    return model_answer
+            
+    
+    # Check if empty
+    # Check if last par is not the last character
+    # Check AST Valid Python Code : ast.parse(model_answer)
+
 def fix_rapidapi_arguments(input_filepath):
-    pass
+    new_data = []
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+        
+    pattern = re.compile(r'requests\.get\(\s*"(.*?)",\s*headers=(\{.*?\})(?:,\s*params=(\{.*?\}))?\s*\)', re.DOTALL)
+    for object in data:
+        try:
+            model_answer = object["model_answer"]
+            # pattern = re.compile(r'requests\.get\("(.*?)", headers=(\{.*?\}), params=(\{.*?\})\)')
+            pattern = re.compile(r'requests\.get\("(.*?)", headers=(\{.*?\}), params=(\{.*?\})\)')
+
+            # Extract the relevant sections of the string
+            match = pattern.search(model_answer)
+            if match is None:
+                print(f"No match found in model answer: {model_answer}")
+                continue
+            url, headers, params = match.groups()
+            
+            api_arguments = [
+                {"name": "url", "type": "string", "description": "The endpoint URL to which the API request is made. It specifies the location of the resource on the server.", "enum": [url]},
+                {"name": "headers", "type": "Dict", "description": "Contains metadata sent with the API request. Headers can include authentication tokens, client information, and other key-value pairs to provide context or directives for the request.", "enum": [json.loads(headers)]},
+                {"name": "params", "type": "Dict", "description": "Parameters passed with the API request, typically used to filter or customize the response. They are included in the URL after a question mark (?).", "enum": [json.loads(params)]}
+            ]
+            object['original']['api_arguments'] = api_arguments
+
+            new_input_filepath = input_filepath.replace(".json", "_fixed.json")
+            with open(f'{new_input_filepath}', 'w') as jsonfile:
+                json.dump(new_data, jsonfile, indent=4)
+        except Exception as e:
+            print(f"Error: {e}")
+            print(f"Model Answer: {model_answer}")
+            continue
 
 def fix_lastchar(input_filepath):
     new_data = []
@@ -68,10 +130,20 @@ def fix_lastchar(input_filepath):
             if api_argument.get('value', None) is not None:
                 del api_argument['value']
         
+        skip = False
         for api_argument in object['original']['api_arguments']:
-            if api_argument['name'] in parameters:
-                api_argument['enum'] = [parameters[api_argument['name']]]
+            found = False
+            for parameter_key in parameters.keys():
+                if api_argument['name'].replace('-', '_') in parameter_key:
+                    api_argument['enum'] = [parameters[parameter_key].replace(')', '')]
+                    found = True
+                    break
+            if found == False:
+                skip = True
                 break
+            
+        # if skip:
+        #     continue
             
         
         new_data.append(object)
@@ -476,12 +548,13 @@ def main():
     # fix_python_parsable(data, clean_input_name)
     
     latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json"
-    fix_lastchar(latest_aws)
+    # fix_lastchar(latest_aws)
     # fix_additional(latest_aws)
     # create_additional_examples(latest_aws)
     # fix_value_to_enum(latest_aws)
     
-    latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional.json"
+    latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed.json"
+    fix_rapidapi_arguments(latset_rapid)
     # fix_additional(latset_rapid, rapidAPI=True)
     # create_additional_examples(latset_rapid)
     # fix_value_to_enum(latset_rapid)
