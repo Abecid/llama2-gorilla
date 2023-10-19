@@ -182,6 +182,10 @@ aws.lambda.list_code_signing_configs()
 aws.emr-containers.list-job-runs --virtual-cluster-id VC-123 --created-after 2022-01-01 --states COMPLETED
 <Response>
 aws.emr_containers.list_job-runs(virtual_cluster_id="VC-123", created_after="2022-01-01", states="COMPLETED")
+<API call>
+import requests\n\nurl = \"https://check-disposable-email.p.rapidapi.com/api/disposable\"\nquerystring = {\"email\": \"example@gmail.com\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"makeup.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n
+<Respons>
+requests.get(\"https://check-disposable-email.p.rapidapi.com/api/disposable\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"check-disposable-email.p.rapidapi.com\"}, params={\"email\": \"example@gmail.com\"})
 """
 
 SYNTHETIC_REQUEST_GENERATION = """

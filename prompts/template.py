@@ -112,7 +112,7 @@ Examples:
 """
 
 fix_response_to_python = """
-Return the given API Call (terminal command/function call) in the correct Python function calling format with the correct Python syntax given the following example:
+Return the given API Call (terminal command/function call) in the correct Python function calling format with the correct Python syntax given the following example (Do not add any other text or import/print or statements or other variables, just the function call in one line. Don't include any newlines!)):
 
 Examples:
 <<<EXAMPLES>>>

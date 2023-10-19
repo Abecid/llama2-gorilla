@@ -41,17 +41,40 @@ def fix_model_answer(model_answer):
         return False
     user_query_start = model_answer.find("User query")
     arguments_start = model_answer.find("<Arguments>")
+    import_exists = model_answer.find("import requests")
+    print_exists = model_answer.find("\nprint")
+    newline_exists = model_answer.find("\n")
     if user_query_start != -1:
         model_answer = model_answer[:user_query_start].strip()
     if arguments_start != -1:
         model_answer = model_answer[:arguments_start].strip()
-    last_par = model_answer.find(")")
-    if last_par != -1 or ast.parse(model_answer) is not None:
-        while True:
-            # model_answer = model_answer[:last_par+1].strip()
+    if import_exists != -1:
+        model_answer = model_answer.replace('import requests', '').strip()
+    # last_par = model_answer.find(")")
+    i = 0
+    while i < 3:
+        try:
+            ast.parse(model_answer)
+            if model_answer.find("import requests") == -1 and model_answer.find("\nprint") == -1 and model_answer.find("\n") == -1:
+                break  # Exit loop if the parsing is successful
+            else:
+                model_answer = get_correct_model_answer_python(model_answer)
+                i += 1
+        except SyntaxError:
+            if i == 1:
+                print(f"Model Answer failed to parse: {model_answer}")
             model_answer = get_correct_model_answer_python(model_answer)
-            if ast.parse(model_answer) is not None:
-                break
+            i += 1
+    # if last_par != -1 or ast.parse(model_answer) is not None:
+    #     i = 0
+    #     while True and i < 3:
+    #         if i >= 1:
+    #             print(f"Model Answer failed to parse {model_answer}")
+    #         # model_answer = model_answer[:last_par+1].strip()
+    #         model_answer = get_correct_model_answer_python(model_answer)
+    #         if ast.parse(model_answer) is not None:
+    #             break
+    #         i += 1
             
     return model_answer
             
@@ -59,6 +82,27 @@ def fix_model_answer(model_answer):
     # Check if empty
     # Check if last par is not the last character
     # Check AST Valid Python Code : ast.parse(model_answer)
+    
+def fix_rapidapi(input_filepath):
+    new_data = []
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    for object in tqdm(data):
+        try:
+            model_answer = object["model_answer"]
+            model_answer = fix_model_answer(model_answer)
+            if model_answer is False:
+                continue
+            object['model_answer'] = model_answer
+            new_data.append(object)
+        except Exception as e:
+            print(f"Error: {e}")
+            print(f"Model Answer: {model_answer}")
+            continue
+    new_input_filepath = input_filepath.replace(".json", "_fixed.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
+    
 
 def fix_rapidapi_arguments(input_filepath):
     new_data = []
@@ -554,10 +598,13 @@ def main():
     # fix_value_to_enum(latest_aws)
     
     latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed.json"
-    fix_rapidapi_arguments(latset_rapid)
+    # fix_rapidapi_arguments(latset_rapid)
     # fix_additional(latset_rapid, rapidAPI=True)
     # create_additional_examples(latset_rapid)
     # fix_value_to_enum(latset_rapid)
+    
+    rapidapi = 'output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_fixed.json'
+    fix_rapidapi(rapidapi)
     
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import re
 import json
+import ast
 
 def check_aws():
     string = "aws.docdb.describe_engine_default_cluster_parameters(db_parameter_group_family=\"docdb3.6\", max_records=50)"
@@ -76,8 +77,15 @@ def check_rapid():
     ]
     print(api_arguments)
 
+def check_ast():
+    ex1 = "requests.get(\"https://check-disposable-email.p.rapidapi.com/api/disposable\", headers={\"X-RapidAPI-Key\" \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"check-disposable-email.p.rapidapi.com\"}, params={\"email\" \"example@gmail.com\"})User query: I want to check the item with ASIN:B09DKV849B on Amazon in the U.S. marketplace.Correct Command: requests.get(\"https://amazon-live-data.p.rapidapi.com/getasin/us/B07WDSD7G7\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"amazon-live-data.p.rapidapi.com\"}, params={\"asin\": \"B09DKV849B\", \"locale\":\"us\"})User query: I want to call the test pg prod API.Correct Command: requests.get(\"https://test-pg-prod.p.rapidapi.com/\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"test-pg-prod.p.rapidapi.com\"}, params={})"
+    ex2 = "requests.get(\"https://uk-postcode.p.rapidapi.com/search\", headers={\"X-RapidAPI-Key\" \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"uk-postcode.p.rapidapi.com\"}, params={\"q\" \"123 Main Street\", \"limit\" 5})"
+    ast.parse(ex2)
+    
+
 def main():
-    check_rapid()
+    # check_rapid()
+    check_ast()
 
 if __name__ == "__main__":
     main()
