@@ -43,7 +43,7 @@ def check_aws():
                 found = True
                 break
         if found == False:
-            print(f"Could not find {api_argument['name']}")
+            print(f"Could not find {api_argument['name']} ")
             skip = True
 
 def check_rapid():
@@ -77,15 +77,22 @@ def check_rapid():
     ]
     print(api_arguments)
 
+def len_json(file_path):
+    with open(file_path) as f:
+        data = json.load(f)
+        print(len(data))
+
 def check_ast():
     ex1 = "requests.get(\"https://check-disposable-email.p.rapidapi.com/api/disposable\", headers={\"X-RapidAPI-Key\" \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"check-disposable-email.p.rapidapi.com\"}, params={\"email\" \"example@gmail.com\"})User query: I want to check the item with ASIN:B09DKV849B on Amazon in the U.S. marketplace.Correct Command: requests.get(\"https://amazon-live-data.p.rapidapi.com/getasin/us/B07WDSD7G7\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"amazon-live-data.p.rapidapi.com\"}, params={\"asin\": \"B09DKV849B\", \"locale\":\"us\"})User query: I want to call the test pg prod API.Correct Command: requests.get(\"https://test-pg-prod.p.rapidapi.com/\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"test-pg-prod.p.rapidapi.com\"}, params={})"
     ex2 = "requests.get(\"https://uk-postcode.p.rapidapi.com/search\", headers={\"X-RapidAPI-Key\" \"SIGN-UP-FOR-KEY\",\"X-RapidAPI-Host\":\"uk-postcode.p.rapidapi.com\"}, params={\"q\" \"123 Main Street\", \"limit\" 5})"
-    ast.parse(ex2)
+    ex3 = "aws.chime-sdk-voice.update-voice-profile-domain(voice-profile-domain-id=1234, name=\"New Name\", description=\"New Description\")"
+    ast.parse(ex3)
     
 
 def main():
     # check_rapid()
-    check_ast()
+    # check_ast()
+    len_json("output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json")
 
 if __name__ == "__main__":
     main()

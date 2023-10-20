@@ -1,5 +1,5 @@
 template = """
-Create an example user query that requires the use of the provided API and also create the corresponding correct command (or function call) given the following example
+Create an example user query that requires the use of the provided API and also create the corresponding python function call (Just create a one line python function call with correct python syntax with no other text or information before or after) refer to the following examples
 
 Example:
 {}
@@ -19,7 +19,7 @@ Correct Command: <Command>
 """
 
 multi_output_template = """
-Create an example user query that requires the use of the provided API and also create the corresponding correct command (or function call) given the following example
+Create an example user query that requires the use of the provided API and also create the corresponding python function call (Just create a one line python function call with correct python syntax with no other text or information) given the following examples
 
 Example:
 {}
@@ -131,4 +131,27 @@ Refer to the following examples and create another realistic query that can be a
 <Dict>
 <<<DICT>>>
 <New Query>
+"""
+
+gcp_template = """
+Create an example user query (as realistic as possible but straight forward) that requires the use of the provided API and also create the corresponding python function call (Just create a one line python function call that is similar to the commandline but with correct python syntax with no other text or information before or after) refer to the following examples
+
+Rules
+1. The user query must include the required arguments for the API (Especially the filepaths, if they are required for the API. And make these arguments/filepaths as realistic as possible)
+2. The user query and correct command should be only separated by one newline ("<Query>\n'Actual Query'\n<API Python Call>\n'Actual API Python Call'")
+3. In the python function call, only use the arguments mentioned in 'api_arguments'
+4. The <API Python Call> Should just contain a one line python function call using the 'api_call' but in python format. For example, if the api_call is "gcloud compute instances list", the python function call should be "gcloud.compute.instances().list()" with the correct arguments and syntax
+
+Examples:
+<<EXAMPLES>>
+
+This must be the output format:
+<Query>
+'Actual Query'
+<API Python Call>
+'Actual API Python Call'
+
+<API>
+<<API>>
+<Query>
 """

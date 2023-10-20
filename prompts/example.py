@@ -184,8 +184,12 @@ aws.emr-containers.list-job-runs --virtual-cluster-id VC-123 --created-after 202
 aws.emr_containers.list_job-runs(virtual_cluster_id="VC-123", created_after="2022-01-01", states="COMPLETED")
 <API call>
 import requests\n\nurl = \"https://check-disposable-email.p.rapidapi.com/api/disposable\"\nquerystring = {\"email\": \"example@gmail.com\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"makeup.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n
-<Respons>
+<Response>
 requests.get(\"https://check-disposable-email.p.rapidapi.com/api/disposable\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"check-disposable-email.p.rapidapi.com\"}, params={\"email\": \"example@gmail.com\"})
+<API call>
+gcloud.ai.endpoints.raw_predict(ENDPOINT="123", --region="us-central1", --request="@input.json")
+<Response>
+gcloud.ai.endpoints.raw_predict(ENDPOINT="123", region="us-central1", request="@input.json")
 """
 
 SYNTHETIC_REQUEST_GENERATION = """
@@ -317,4 +321,87 @@ Can you provide a Python function call to obtain the available power options for
 aws.lightsail.get_container_service_powers()
 <Arguments>
 None
+"""
+
+GCP_EXAMPLE = """
+<API1>
+{
+    "domain": "Cloud Infrastructure",
+    "framework": "aws",
+    "functionality": "Displays a list of all entitlements that have been granted to this account. This request returns 20 results per page.list-entitlements is a paginated operation. Multiple API calls may be issued in order to retrieve the entire data set of results. You can disable pagination by providing the --no-paginate argument.",
+    "api_name": "aws.mediaconnect.list_entitlements",
+    "api_call": "aws mediaconnect list-entitlements [OPTIONS]",
+    "api_arguments": [
+        {
+            "name": "page-size",
+            "enum": [
+                "10"
+            ],
+            "description": "\nThe size of each page to get in the AWS service call. This does not affect the number of items returned in the command\u00e2\u0080\u0099s output. Setting a smaller page size results in more calls to the AWS service, retrieving fewer items in each call. This can help prevent the AWS service calls from timing out.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n"
+        }
+    ],
+    "python_environment_requirements": [
+        "aws"
+    ],
+    "example_code": [
+        "aws mediaconnect list-entitlements\n"
+    ],
+    "output": {
+        "Entitlements -> (list)": "\nA list of entitlements that have been granted to you from other AWS accounts.\n(structure)\n\nAn entitlement that has been granted to you from other AWS accounts.\nDataTransferSubscriberFeePercent -> (integer)\n\nPercentage from 0-100 of the data transfer cost to be billed to the subscriber.\nEntitlementArn -> (string)\n\nThe ARN of the entitlement.\nEntitlementName -> (string)\n\nThe name of the entitlement.\n\n",
+        "NextToken -> (string)": "\nThe token that identifies which batch of results that you want to see. For example, you submit a ListEntitlements request with MaxResults set at 5. The service returns the first batch of results (up to 5) and a NextToken value. To see the next batch of results, you can submit the ListEntitlements request a second time and specify the NextToken value."
+    },
+    "api_name_original": "list-entitlements",
+    "api_arguments_original": {
+        "--starting-token ": "\nA token to specify where to start paginating. This is the NextToken from a previously truncated response.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+        "--page-size ": "\nThe size of each page to get in the AWS service call. This does not affect the number of items returned in the command\u00e2\u0080\u0099s output. Setting a smaller page size results in more calls to the AWS service, retrieving fewer items in each call. This can help prevent the AWS service calls from timing out.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n",
+        "--max-items ": "\nThe total number of items to return in the command\u00e2\u0080\u0099s output. If the total number of items available is more than the value specified, a NextToken is provided in the command\u00e2\u0080\u0099s output. To resume pagination, provide the NextToken value in the starting-token argument of a subsequent command. Do not use the NextToken response element directly outside of the AWS CLI.\nFor usage examples, see Pagination in the AWS Command Line Interface User Guide .\n"
+    }
+}
+<Query1>
+I want to list the entitlements for my AWS account, but only retrieve the first 10 results.
+<API Python Call1>
+aws.mediaconnect.list_entitlements(page_size=10)
+
+<API2>
+{
+    "domain": "Cloud Infrastructure",
+    "framework": "aws",
+    "functionality": "Get detailed data for a service instance. A service instance is an instantiation of service template and it runs in a specific environment.",
+    "api_name": "aws.proton.get-service-instance",
+    "api_call": "aws proton get-service-instance [OPTIONS]",
+    "api_arguments": [
+        {
+            "name": "name",
+            "enum": [
+                "instance-two"
+            ],
+            "description": "\nThe name of a service instance that you want to get the detailed data for."
+        },
+        {
+            "name": "service-name",
+            "enum": [
+                "simple-svc"
+            ],
+            "description": "\nThe name of the service that you want the service instance input for."
+        }
+    ],
+    "python_environment_requirements": [
+        "aws"
+    ],
+    "example_code": [
+        "aws proton get-service-instance     --name \"instance-one\"     --service-name \"simple-svc\"\n"
+    ],
+    "output": {
+        "serviceInstance -> (structure)": "\nThe detailed data of the requested service instance.\narn -> (string)\n\nThe Amazon Resource Name (ARN) of the service instance.\ncreatedAt -> (timestamp)\n\nThe time when the service instance was created.\ndeploymentStatus -> (string)\n\nThe service instance deployment status.\ndeploymentStatusMessage -> (string)\n\nThe message associated with the service instance deployment status.\nenvironmentName -> (string)\n\nThe name of the environment that the service instance was deployed into.\nlastAttemptedDeploymentId -> (string)\n\nThe ID of the last attempted deployment of this service instance.\nlastClientRequestToken -> (string)\n\nThe last client request token received.\nlastDeploymentAttemptedAt -> (timestamp)\n\nThe time when a deployment of the service instance was last attempted.\nlastDeploymentSucceededAt -> (timestamp)\n\nThe time when the service instance was last deployed successfully.\nlastSucceededDeploymentId -> (string)\n\nThe ID of the last successful deployment of this service instance.\nname -> (string)\n\nThe name of the service instance.\nserviceName -> (string)\n\nThe name of the service that the service instance belongs to.\nspec -> (string)\n\nThe service spec that was used to create the service instance.\ntemplateMajorVersion -> (string)\n\nThe major version of the service template that was used to create the service instance.\ntemplateMinorVersion -> (string)\n\nThe minor version of the service template that was used to create the service instance.\ntemplateName -> (string)\n\nThe name of the service template that was used to create the service instance.\n"
+    },
+    "api_name_original": "get-service-instance",
+    "api_arguments_original": {
+        "--name ": "\nThe name of a service instance that you want to get the detailed data for.",
+        "--service-name ": "\nThe name of the service that you want the service instance input for."
+    }
+}
+<Query2>
+I want to get the detailed data for a service instance named instance-two for the service simple-svc on AWS Proton.
+<API Python Call2>
+aws.proton.get_service_instance(name=\"instance-two\", service_name=\"simple-svc\")
 """

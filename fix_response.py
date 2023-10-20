@@ -36,6 +36,72 @@ def get_correct_model_answer_python(model_answer):
     response = OpenAI_API.chatgpt(prompt).strip()
     return response
 
+def fix_query(query):
+    if '\ngcloud' in query:
+        query = query[:query.find('\ngcloud')].strip()
+    if '\ngit' in query:
+        query = query[:query.find('\ngit')].strip()
+    return query
+
+def fix_gcloud_model_answer(model_answer):
+    if len(model_answer) == 0:
+        return False
+    i = 0
+    while i < 3:
+        if i == 1:
+            model_answer.replace('-', '_')
+            if '\ngcloud' in model_answer:
+                model_answer = model_answer[model_answer.find('\ngcloud')+1:].split('\n')[0].strip()
+            if '\ngit' in model_answer:
+                model_answer = model_answer[model_answer.find('\ngit')+1:].split('\n')[0].strip()
+        try:
+            ast.parse(model_answer)
+            if model_answer.find("import requests") == -1 and model_answer.find("\nprint") == -1 and model_answer.find("\n") == -1:
+                return model_answer
+                break  # Exit loop if the parsing is successful
+            else:
+                model_answer = get_correct_model_answer_python(model_answer)
+                i += 1
+        except SyntaxError:
+            if (('gcloud.' not in model_answer) and ('git.' not in model_answer)) and '(' not in model_answer and ')' not in model_answer:
+                return False
+            if i == 0:
+                model_answer.replace('-', '_')
+                if '\ngcloud' in model_answer:
+                    model_answer = model_answer[model_answer.find('\ngcloud')+1:].split('\n')[0].strip()
+                i += 1
+                continue
+            if i == 1:
+                print(f"Model Answer failed to parse: {model_answer}")
+            model_answer = get_correct_model_answer_python(model_answer)
+            i += 1
+    return False
+    return model_answer
+
+def fix_gcloud(input_filepath, max=-1):
+    new_data = []
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    for index, object in enumerate(tqdm(data)):
+        if max>0 and index >= max:
+            break
+        try:
+            model_answer = object["model_answer"]
+            model_answer = fix_gcloud_model_answer(model_answer)
+            object["query"] = fix_query(object["query"])
+            if model_answer is False:
+                continue
+            object['model_answer'] = model_answer
+            new_data.append(object)
+        except Exception as e:
+            print(f"Error: {e}")
+            print(f"Model Answer: {model_answer}")
+            continue
+    new_input_filepath = input_filepath.replace(".json", "_fixed.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(new_data, jsonfile, indent=4)
+    
+
 def fix_model_answer(model_answer):
     if len(model_answer) == 0:
         return False
@@ -102,41 +168,88 @@ def fix_rapidapi(input_filepath):
     new_input_filepath = input_filepath.replace(".json", "_fixed.json")
     with open(f'{new_input_filepath}', 'w') as jsonfile:
         json.dump(new_data, jsonfile, indent=4)
+
+
+def extract_arguments(s):
+    url_pattern = r"requests\.get\(\"(.*?)\""
+    headers_pattern = r"headers=\{(.*?)\}"
+    params_pattern = r"params=\{(.*?)\}"
+
+    url_match = re.search(url_pattern, s)
+    headers_match = re.search(headers_pattern, s)
+    params_match = re.search(params_pattern, s)
+
+    url = url_match.group(1) if url_match else None
+
+    headers_str = headers_match.group(1) if headers_match else None
+    params_str = params_match.group(1) if params_match else None
+
+    # Convert to valid JSON format
+    headers_str = "{" + headers_str + "}" if headers_str else None
+    params_str = "{" + params_str + "}" if params_str else None
     
+    if headers_str:
+        headers_str = headers_str.replace('True', 'true').replace('False', 'false').replace("'", "\"")
+    if params_str:
+        params_str = params_str.replace('True', 'true').replace('False', 'false').replace("'", "\"")
+
+    # # Replace problematic terms to be JSON-compatible
+    # if headers_str:
+    #     headers_str = headers_str.replace('true', 'True').replace('false', 'False').replace("'", "\"")
+    # if params_str:
+    #     params_str = params_str.replace('true', 'True').replace('false', 'False').replace("'", "\"")
+
+    print(f'URL: {url}')
+    print(f'Headers: {headers_str}')
+    print(f'Params: {params_str}')
+
+    # Convert strings to dictionaries using json.loads
+    headers = json.loads(headers_str) if headers_str else None
+    params = json.loads(params_str) if params_str else None
+
+    return url, headers, params
 
 def fix_rapidapi_arguments(input_filepath):
     new_data = []
     with open(input_filepath, 'r') as file:
         data = json.load(file)
         
-    pattern = re.compile(r'requests\.get\(\s*"(.*?)",\s*headers=(\{.*?\})(?:,\s*params=(\{.*?\}))?\s*\)', re.DOTALL)
-    for object in data:
+    # pattern = re.compile(r'requests\.get\(\s*"(.*?)",\s*headers=(\{.*?\})(?:,\s*params=(\{.*?\}))?\s*\)', re.DOTALL)
+    for object in tqdm(data):
         try:
             model_answer = object["model_answer"]
+            url, headers, params = extract_arguments(model_answer)
+            # print(f"URL: {url}")
+            # print(f"Headers: {headers}")
+            # print(f"Params: {params}")
+            
+            # # pattern = re.compile(r'requests\.get\("(.*?)", headers=(\{.*?\}), params=(\{.*?\})\)')
             # pattern = re.compile(r'requests\.get\("(.*?)", headers=(\{.*?\}), params=(\{.*?\})\)')
-            pattern = re.compile(r'requests\.get\("(.*?)", headers=(\{.*?\}), params=(\{.*?\})\)')
 
-            # Extract the relevant sections of the string
-            match = pattern.search(model_answer)
-            if match is None:
-                print(f"No match found in model answer: {model_answer}")
+            # # Extract the relevant sections of the string
+            # match = pattern.search(model_answer)
+            # if match is None:
+            #     print(f"No match found in model answer: {model_answer}")
+            #     continue
+            # url, headers, params = match.groups()
+            
+            if headers is None:
                 continue
-            url, headers, params = match.groups()
             
             api_arguments = [
                 {"name": "url", "type": "string", "description": "The endpoint URL to which the API request is made. It specifies the location of the resource on the server.", "enum": [url]},
-                {"name": "headers", "type": "Dict", "description": "Contains metadata sent with the API request. Headers can include authentication tokens, client information, and other key-value pairs to provide context or directives for the request.", "enum": [json.loads(headers)]},
-                {"name": "params", "type": "Dict", "description": "Parameters passed with the API request, typically used to filter or customize the response. They are included in the URL after a question mark (?).", "enum": [json.loads(params)]}
+                {"name": "headers", "type": "Dict", "description": "Contains metadata sent with the API request. Headers can include authentication tokens, client information, and other key-value pairs to provide context or directives for the request.", "enum": [headers]},
+                {"name": "params", "type": "Dict", "description": "Parameters passed with the API request, typically used to filter or customize the response. They are included in the URL after a question mark (?).", "enum": [params]}
             ]
             object['original']['api_arguments'] = api_arguments
 
-            new_input_filepath = input_filepath.replace(".json", "_fixed.json")
-            with open(f'{new_input_filepath}', 'w') as jsonfile:
-                json.dump(new_data, jsonfile, indent=4)
         except Exception as e:
             print(f"Error: {e}")
             print(f"Model Answer: {model_answer}")
             continue
+    new_input_filepath = input_filepath.replace(".json", "_fixedArguments.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(data, jsonfile, indent=4)
 
 def fix_lastchar(input_filepath):
     new_data = []
@@ -603,8 +716,12 @@ def main():
     # create_additional_examples(latset_rapid)
     # fix_value_to_enum(latset_rapid)
     
-    rapidapi = 'output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_fixed.json'
-    fix_rapidapi(rapidapi)
+    rapidapi = 'output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed_fixedArguments.json'
+    # fix_rapidapi(rapidapi)
+    
+    gcloud = "output/openai_gcloud-2023Jun13_fixed_10_19.json"
+    github = "output/openai_github-2023Jun13_fixed_10_19.json"
+    fix_gcloud(github)
     
 
 if __name__ == "__main__":

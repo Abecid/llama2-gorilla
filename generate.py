@@ -9,8 +9,10 @@ import openai_api
 
 conda = "openai_conda-2023Jun12.json"
 linux = "openai_linux-2023Jun13.json"
+gcp = "dataset1/openai_gcloud-2023Jun13_fixed.json"
+github = "dataset1/openai_github-2023Jun13_fixed.json"
 
-inputs = [conda, linux]
+inputs = [gcp, github]
 
 model = "gpt-3.5-turbo"
 # model = "gpt-4"
@@ -20,18 +22,26 @@ model_clean_name = model.replace(".", "-").replace("/", "_").replace(" ", "_").r
 OpenAI_API = openai_api.OpenAI_API(model=model)
 example_api = example_prompt.example
 
-MAX_PER_FILE = 150
-MULTI_OUTPUT = 3
+MAX_PER_FILE = 1000
+MULTI_OUTPUT = 1
 
-def generate_queries_for_file(data, clean_input_name):
+def prase_response(model_reseponse):
+    function_call_index = model_reseponse.find("<API Python Call>")
+    query = model_reseponse[:function_call_index].replace("<Query>", "").strip()
+    function_call = model_reseponse[function_call_index+len("<API Python Call>"):].strip()
+    
+    return query, function_call
+    
+
+def generate_queries_for_file(data, clean_input_name, max_per_file=MAX_PER_FILE, multi_output=MULTI_OUTPUT):
     print(f"Length of data: {len(data)}")
     
     output_data = []
     
     for index, example in enumerate(tqdm(data)):
-        if index == MAX_PER_FILE:
+        if index == max_per_file:
             break
-        print(f"Example {index+1}/{len(data)}")
+        # print(f"Example {index+1}/{len(data)}")
         
         try:
             example_str = json.dumps(example)
@@ -44,12 +54,13 @@ def generate_queries_for_file(data, clean_input_name):
             arguments = example['api_arguments']
             # metadata = json.dumps(example['meta_data'])
             
-            prompt = template.template.format(example, example_str)
+            # prompt = template.template.format(example, example_str)
+            prompt = template.gcp_template.replace("<<EXAMPLES>>", example_prompt.GCP_EXAMPLE).replace("<<API>>", example_str)
             if MULTI_OUTPUT > 1:
                 prompt = template.multi_output_template.format(example, example_str, MULTI_OUTPUT)
             
             response = OpenAI_API.chatgpt(prompt)
-            print(response)
+            # print(response)
             
             if MULTI_OUTPUT > 1:
                 # Find the start positions of each "User query<n>"
@@ -86,8 +97,10 @@ def generate_queries_for_file(data, clean_input_name):
                     
                     output_data.append(sample_dict)
             else:
-                user_query = response.split("\n")[0].split(": ")[1].strip()
-                model_answer = response.split("\n")[1].split(": ")[1].strip()
+                # user_query = response.split("\n")[0].split(": ")[1].strip()
+                # model_answer = response.split("\n")[1].split(": ")[1].strip()
+                
+                user_query, model_answer = prase_response(response)
                 
                 sample_dict = {
                     # 'api_name': name,
@@ -102,15 +115,17 @@ def generate_queries_for_file(data, clean_input_name):
             continue
     now = datetime.now()
     # Convert to string format
-    date_string = now.strftime('%m_%d')
+    date_string = now.strftime('%m_%d_%H_%M_%S')
     
-    with open(f'output/{clean_input_name}_{date_string}_{model_clean_name}.json', 'w') as jsonfile:
+    with open(f'output/{clean_input_name}_{date_string}.json', 'w') as jsonfile:
         json.dump(output_data, jsonfile, indent=4)
 
 def main():
     for input_file in inputs:
         data = json.load(open(f'input/{input_file}'))
         clean_input_name = input_file.split(".")[0]
+        if '/' in clean_input_name:
+            clean_input_name = clean_input_name.split('/')[1]
         generate_queries_for_file(data, clean_input_name)
 
 
