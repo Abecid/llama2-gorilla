@@ -36,6 +36,13 @@ def get_correct_model_answer_python(model_answer):
     response = OpenAI_API.chatgpt(prompt).strip()
     return response
 
+def fix_model_name(s):
+    last_dot_index = s.rfind('.')
+    open_parenthesis_index = s.find('(', last_dot_index)
+
+    function_name = s[:open_parenthesis_index]
+    return function_name
+
 def fix_query(query):
     if '\ngcloud' in query:
         query = query[:query.find('\ngcloud')].strip()
@@ -77,6 +84,22 @@ def fix_gcloud_model_answer(model_answer):
             i += 1
     return False
     return model_answer
+
+def fix_model_names(input_filepath):
+    with open(input_filepath, 'r') as file:
+        data = json.load(file)
+    for index, object in enumerate(tqdm(data)):
+        try:
+            object['original']['api_name_original'] = object['original']['api_name']
+            model_answer = object["model_answer"]
+            model_name = fix_model_name(model_answer)
+            object['original']['api_name'] = model_name
+        except Exception as e:
+            print(f"Error: {e}")
+            continue
+    new_input_filepath = input_filepath.replace(".json", "_fixed.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(data, jsonfile, indent=4)
 
 def fix_gcloud(input_filepath, max=-1):
     new_data = []
@@ -339,7 +362,61 @@ def fix_additional(input_filepath, rapidAPI=False):
     new_input_filepath = input_filepath.replace(".json", "_fixed.json")
     with open(f'{new_input_filepath}', 'w') as jsonfile:
         json.dump(new_data, jsonfile, indent=4)
+
+def clean_argument_name(argument):
+    return argument.strip().replace("--", "").replace("-", "_").replace(" ", "_").replace("(", "").replace(")", "").replace(":", "").replace(">", "").replace("<", "").split('=')[0].lower().strip()
     
+
+
+def fix_arguments(object_json):
+    if object_json['original'].get('api_arguments_original', False) is False:
+        object_json['original']['api_arguments_original'] = object_json['original']['api_arguments']
+    original_arguments = object_json['original']['api_arguments_original']
+    
+    if isinstance(original_arguments, dict):
+        new_arguments = []
+        for key in original_arguments.keys():
+            new_arguments.append({
+                "name": clean_argument_name(key),
+                "description": original_arguments[key].strip()
+            })
+        return new_arguments
+    
+    if isinstance(original_arguments, list):
+        new_arguments = []
+        for argument in original_arguments:
+            if isinstance(argument, str):
+                new_arguments.append({
+                    "name": clean_argument_name(argument),
+                })
+            elif isinstance(argument, dict):
+                new_dict = {}
+                new_dict['name'] = clean_argument_name(argument['name'])
+                if argument.get('description', None) is not None:
+                    new_dict['description'] = argument['description'].strip()
+                if argument.get('type', None) is not None:
+                    new_dict['type'] = argument['type']
+                new_arguments.append(new_dict)
+        return new_arguments
+    
+    return original_arguments
+    
+    if len(object_json['original']['api_arguments']) == 0:
+        return original_arguments
+    if object_json['original']['api_arguments'][0].get('name', None) is not None:
+        return object_json['original']['api_arguments']
+    new_arguments = []
+    for argument in original_arguments:
+        new_arguments.append({
+            "name": argument['name'],
+            "enum": [argument['value']],
+            "description": argument['description']
+        })
+
+
+def fix_api_name(object_json):
+    api_name = object_json['original']['api_name']
+    return api_name.replace("-", "_").strip()
 
 def fix_value_to_enum(input_filepath):
     with open(input_filepath, 'r') as file:
@@ -368,33 +445,76 @@ def fix_value_to_enum(input_filepath):
         json.dump(data, jsonfile, indent=4)
     
 
-def create_additional_examples(input_filepath):
+def create_additional_examples(input_filepath, max_per_file=None):
+    curr_file = input_filepath.split("/")[-1]
+    print(f"{curr_file}")
     with open(input_filepath, 'r') as file:
         data = json.load(file)
     
     new_data = []
     
     for index, example in tqdm(enumerate(data), desc='Processing data'):
-        try:
-            prompt = template.create_additional_queries.replace("<<<DICT>>>", json.dumps(example, indent=4)).replace("<<<EXAMPLES>>>", prompt_examples.SYNTHETIC_REQUEST_GENERATION)
-            response = OpenAI_API.chatgpt(prompt)
-            new_query = response.split("\n")[0]
-            model_answer_inddex = response.find("<New Model Answer>")
-            arguemnt_index = response.find("<Arguments>")
-            model_answer = response[model_answer_inddex:arguemnt_index].replace("<New Model Answer>", "").strip()
-            argument = response[arguemnt_index:].replace("<Arguments>", "").strip()
-            arguments = argument.split(";")
-            arguments = [{a.split(':')[0].strip():a.split(':')[1].strip()} for a in arguments if ':' in a]
-            
-            example['query'] = new_query
-            example['model_answer'] = model_answer
-            example['original']['api_arguments'] = arguments
-            new_data.append(example)
-        except Exception as e:
-            print(f"{index}. {e}")
-            continue
+        if max_per_file is not None and index >= max_per_file:
+            break
+        tries = 0
+        while True:
+            if tries >= 3:
+                break
+            try:
+                prompt = template.create_additional_queries.replace("<<<DICT>>>", json.dumps(example, indent=4)).replace("<<<EXAMPLES>>>", prompt_examples.SYNTHETIC_REQUEST_GENERATION)
+                response = OpenAI_API.chatgpt(prompt)
+                # print(f"\n\nResponse:\n{response}\n\n")
+                
+                model_answer_inddex = response.find("<New Model Answer>")
+                if model_answer_inddex == -1:    
+                    print(f"Model Answer not found!")
+                    print(response)
+                    tries += 1
+                    continue
+                # arguemnt_index = response.find("<Arguments>")
+                
+                new_query_index = response.find("<New Query>")
+                if new_query_index >= 0:
+                    new_query = response[new_query_index:].replace("<New Query>", "").strip()
+                else:
+                    new_query = response.split("\n")[0][:model_answer_inddex].strip()
+                model_answer = response[model_answer_inddex:].replace("<New Model Answer>", "").strip()
+                
+                ast.parse(model_answer)
+                if len(model_answer.strip()) == 0:
+                    print("Model Answer is empty!")
+                    print(response)
+                    tries += 1
+                    continue
+                
+                # argument = response[arguemnt_index:].replace("<Arguments>", "").strip()
+                # arguments = argument.split(";")
+                # arguments = [{a.split(':')[0].strip():a.split(':')[1].strip()} for a in arguments if ':' in a]
+                
+                # if example['original'].get('api_arguments_original', False) is False:
+                #     example['original']['api_arguments_original'] = example['original']['api_arguments']
+                
+                arguments = fix_arguments(example)
+                
+                example['query'] = new_query
+                example['model_answer'] = model_answer
+                example['original']['api_arguments'] = arguments
+                
+                example['original']['api_name'] = fix_api_name(example)
+                
+                new_data.append(example)
+                break
+            except Exception as e:
+                print(f"{index}-{tries}. {e}\n{response}")
+                tries += 1
+                if tries >= 3:
+                    break
+                continue
     
-    new_input_filepath = input_filepath.replace(".json", "_additional.json")
+    dirs = input_filepath.split("/")
+    dirs.insert(-1, "additional")
+    new_input_filepath = "/".join(dirs)
+    # new_input_filepath = input_filepath.replace(".json", "_additional.json")
     with open(f'{new_input_filepath}', 'w') as jsonfile:
         json.dump(new_data, jsonfile, indent=4)
         
@@ -707,8 +827,15 @@ def main():
     latest_aws = "output/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json"
     # fix_lastchar(latest_aws)
     # fix_additional(latest_aws)
-    # create_additional_examples(latest_aws)
     # fix_value_to_enum(latest_aws)
+    
+    dataset1 = ['output/dataset1/aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json',
+               'output/dataset1/openai_gcloud-2023Jun13_fixed_10_19_fixed_fixed.json',
+               'output/dataset1/openai_github-2023Jun13_fixed_10_19_fixed_fixed.json',
+               'output/dataset1/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed_fixedArguments_fixed.json',
+               'output/dataset1/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_fixed_fixed.json']
+    for dataset in dataset1:
+        create_additional_examples(dataset)
     
     latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed.json"
     # fix_rapidapi_arguments(latset_rapid)
@@ -721,7 +848,11 @@ def main():
     
     gcloud = "output/openai_gcloud-2023Jun13_fixed_10_19.json"
     github = "output/openai_github-2023Jun13_fixed_10_19.json"
-    fix_gcloud(github)
+    # fix_gcloud(github)
+    
+    gcloud = "output/openai_gcloud-2023Jun13_fixed_10_19_fixed.json"
+    github = "output/openai_github-2023Jun13_fixed_10_19_fixed.json"
+    fix_model_names(gcloud)
     
 
 if __name__ == "__main__":

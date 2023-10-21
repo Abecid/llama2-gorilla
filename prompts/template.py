@@ -123,10 +123,12 @@ Examples:
 """
 
 create_additional_queries = """
-Refer to the following examples and create another realistic query that can be accomplished by executing the python function (api_name) using different argument permutations and argument values (But you can not use arguments not mentioned in the json! But feel free to use any arguments in api_arguments_original accordingly while adhering to its description and mention the used arguments in key:value format). The generated model_answer should be a one-line, valid execution of a python function, with correct python syntax that calls the API correctly, aligned with the query. 
+Refer to the following examples and create another realistic query that can be accomplished by executing the python function (api_name) using different argument permutations and argument values (But you can not use arguments not mentioned in the json! But feel free to use any arguments in api_arguments_original accordingly while adhering to its description) and also create the model answer (the correct python function execution) separated just like the examples. The generated model_answer should be a one-line, valid execution of a python function, with correct python syntax that calls the API correctly, aligned with the query. 
 
 <Examples>
 <<<EXAMPLES>>>
+
+!!YOU MUST generate both the "New Query" and the "New Model Answer" in the given format above! BE SURE TO INCLUDE THE <New Model Answer> after the New Query!!
 
 <Dict>
 <<<DICT>>>

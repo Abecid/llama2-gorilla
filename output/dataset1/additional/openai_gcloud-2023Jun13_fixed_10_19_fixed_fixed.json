@@ -1,0 +1,187 @@
+[
+    {
+        "query": "I want to show details about an existing authorized organizations description with the ID \"my_authorized_orgs_desc_id\".",
+        "model_answer": "gcloud.access_context_manager.authorized_orgs().describe(AUTHORIZED_ORGS_DESC=\"my_authorized_orgs_desc_id\")",
+        "original": {
+            "domain": "gcloud",
+            "framework": "access-context-manager",
+            "functionality": "Show details about an authorized organizations description",
+            "api_name": "gcloud.access_context_manager.authorized_orgs().describe",
+            "api_call": "gcloud access-context-manager authorized-orgs describe AUTHORIZED_ORGS_DESC --policy=POLICY",
+            "api_arguments": [
+                {
+                    "name": "authorized_orgs_desc"
+                },
+                {
+                    "name": "policy"
+                }
+            ],
+            "python_environment_requirements": [
+                "gcloud",
+                "access-context-manager"
+            ],
+            "example_code": [
+                {
+                    "description": "To get details about an existing authorized organizations description",
+                    "code": "gcloud access-context-manager authorized-orgs describe my_authorized_orgs_desc_id"
+                }
+            ],
+            "description": "This API is used to show details about an existing authorized organizations description. The authorized organizations description for which you want to show details can be specified using the AUTHORIZED_ORGS_DESC argument. The ID of the access policy can be set using the --policy argument.",
+            "api_name_original": "authorized-orgs describe",
+            "api_arguments_original": [
+                "AUTHORIZED_ORGS_DESC",
+                "--policy"
+            ]
+        }
+    },
+    {
+        "query": "I want to replace all existing access levels in my access policy with access levels specified in a file. The policy ID is \"my-policy-number\" and the file containing the replacement access levels is located at \"path-to-file-containing-all-replacement-access-levels.yaml\".",
+        "model_answer": "gcloud.access_context_manager.levels.replace_all(POLICY=\"my-policy-number\", source_file=\"path-to-file-containing-all-replacement-access-levels.yaml\")",
+        "original": {
+            "domain": "gcloud",
+            "framework": "access-context-manager",
+            "functionality": "Replace all existing access levels",
+            "api_name": "gcloud.access_context_manager.levels.replace_all",
+            "api_call": "gcloud access-context-manager levels replace-all [POLICY] --source-file=SOURCE_FILE [--etag=ETAG]",
+            "api_arguments": [
+                {
+                    "name": "policy"
+                },
+                {
+                    "name": "source_file"
+                },
+                {
+                    "name": "etag"
+                }
+            ],
+            "python_environment_requirements": [
+                "gcloud"
+            ],
+            "example_code": [
+                {
+                    "description": "Replace all levels within a policy, using etag",
+                    "code": "gcloud access-context-manager levels replace-all my-policy-number --source-file=path-to-file-containing-all-replacement-access-levels.yaml --etag=optional-latest-etag-of-policy"
+                },
+                {
+                    "description": "Replace all levels within a policy, without using etag",
+                    "code": "gcloud access-context-manager levels replace-all my-policy-number --source-file=path-to-file-containing-all-replacement-access-levels.yaml"
+                }
+            ],
+            "description": "This API call replaces all existing access levels in a specified access policy with access levels specified in a file. It requires the policy id or fully qualified identifier for the policy. An optional etag argument can be used to ensure the latest version of the policy is being updated.",
+            "api_name_original": "levels replace-all",
+            "api_arguments_original": [
+                "POLICY",
+                "source_file",
+                "etag"
+            ]
+        }
+    },
+    {
+        "query": "I want to delete a service perimeter with the ID 789 in access policy 012.",
+        "model_answer": "gcloud.access_context_manager.perimeters().delete(PERIMETER=\"789\", policy=\"012\")",
+        "original": {
+            "domain": "gcloud",
+            "framework": "access-context-manager",
+            "functionality": "Delete a service perimeter",
+            "api_name": "gcloud.access_context_manager.perimeters().delete",
+            "api_call": "gcloud access-context-manager perimeters delete (PERIMETER : --policy=POLICY)",
+            "api_arguments": [
+                {
+                    "name": "perimeter",
+                    "description": "ID of the perimeter or fully qualified identifier for the perimeter."
+                },
+                {
+                    "name": "policy",
+                    "description": "The ID of the access policy."
+                }
+            ],
+            "python_environment_requirements": [],
+            "description": "This API call is used to delete a service perimeter in a given access policy. The perimeter and policy IDs are required to perform this action.",
+            "example_code": [
+                {
+                    "description": "Example of deleting a perimeter",
+                    "code": "gcloud access-context-manager perimeters delete 123 --policy=456"
+                }
+            ],
+            "api_name_original": "perimeters delete",
+            "api_arguments_original": [
+                {
+                    "name": "PERIMETER",
+                    "description": "ID of the perimeter or fully qualified identifier for the perimeter."
+                },
+                {
+                    "name": "--policy",
+                    "description": "The ID of the access policy."
+                }
+            ]
+        }
+    },
+    {
+        "query": "I want to dismiss an Access Approval request with the name \"projects/67890/approvalRequests/xyz789\".",
+        "model_answer": "gcloud.access_approval.requests().dismiss(name=\"projects/67890/approvalRequests/xyz789\")",
+        "original": {
+            "domain": "gcloud",
+            "framework": "access-approval",
+            "functionality": "Dismiss an Access Approval request",
+            "api_name": "gcloud.access_approval.requests().dismiss",
+            "api_call": "gcloud access-approval requests dismiss NAME",
+            "api_arguments": [
+                {
+                    "name": "name"
+                }
+            ],
+            "python_environment_requirements": [],
+            "example_code": [
+                {
+                    "description": "To dismiss an approval request using its name",
+                    "code": "gcloud access-approval requests dismiss projects/12345/approvalRequests/abc123"
+                }
+            ],
+            "description": "The 'requests dismiss' API in gcloud's access-approval framework allows you to dismiss an Access Approval request. This action does not deny access to the resource if another request has been made and approved for the same resource. An error will be raised if the request does not exist.",
+            "api_name_original": "requests dismiss",
+            "api_arguments_original": [
+                "NAME"
+            ]
+        }
+    },
+    {
+        "query": "I want to get the Access Approval settings for my Google Cloud project.",
+        "model_answer": "gcloud.access_approval.settings().get(project=PROJECT)",
+        "original": {
+            "domain": "Google Cloud",
+            "framework": "gcloud",
+            "functionality": "Get Access Approval settings",
+            "api_name": "gcloud.access_approval.settings().get",
+            "api_call": "gcloud access-approval settings get [--folder=FOLDER | --organization=ORGANIZATION | --project=PROJECT]",
+            "api_arguments": [
+                {
+                    "name": "folder"
+                },
+                {
+                    "name": "organization"
+                },
+                {
+                    "name": "project"
+                }
+            ],
+            "python_environment_requirements": [],
+            "example_code": [
+                {
+                    "description": "Get the settings for the current project",
+                    "code": "gcloud access-approval settings get"
+                },
+                {
+                    "description": "Get the settings for folder f1",
+                    "code": "gcloud access-approval settings get --folder=f1"
+                }
+            ],
+            "description": "This gcloud API is used to get the Access Approval settings associated with a project, a folder, or an organization. The settings can be retrieved based on either the project number, the folder number, or the organization number. If none of these are provided, it uses the config property [core/project].",
+            "api_name_original": "access-approval settings get",
+            "api_arguments_original": [
+                "--folder=FOLDER",
+                "--organization=ORGANIZATION",
+                "--project=PROJECT"
+            ]
+        }
+    }
+]

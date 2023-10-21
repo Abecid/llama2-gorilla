@@ -1,5 +1,6 @@
 import json
 import ast
+import os
 
 filename = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48.json"
 
@@ -28,13 +29,36 @@ def count_non_parsable_apis(data):
 
     return non_parsable_count
 
+def check_json_length(input):
+    """Check the length of the JSON file."""
+    with open(input, 'r') as f:
+        data = json.load(f)
+    # print(len(data))
+    return len(data)
+
+def check_jsons_length(inputs):
+    if isinstance(inputs, str):
+        path = inputs
+        inputs = []
+        for filename in os.listdir(path):
+            if filename.endswith('.json'):
+                file_path = os.path.join(path, filename)
+                inputs.append(file_path)
+    
+    total = 0
+    for input in inputs:
+        total += check_json_length(input)
+    print(total)
+
 def main():
     # Path to your JSON file
-    file_path = f'output/{filename}'
-    with open(file_path, 'r') as f:
-        data = json.load(f)
-    num_errors = count_non_parsable_apis(data)
-    print(f"Number of APIs with incorrect syntax: {num_errors}/{len(data)}")
+    # file_path = f'output/{filename}'
+    # with open(file_path, 'r') as f:
+    #     data = json.load(f)
+    # num_errors = count_non_parsable_apis(data)
+    # print(f"Number of APIs with incorrect syntax: {num_errors}/{len(data)}")
+    
+    check_jsons_length('/Users/abecid/Downloads/Berkeley/BAIR/Tianjun/data/train_dataset1')
 
 if __name__ == "__main__":
     main()

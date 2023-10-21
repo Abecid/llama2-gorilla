@@ -255,8 +255,6 @@ SYNTHETIC_REQUEST_GENERATION = """
 I want to create a new user with the name Jane Smith, a display name of Jane S, in an organization with the ID org5678, and set the password to 'securePass123' in AWS WorkMail."
 <New Model Answer>
 aws.workmail.create_user(organization_id="org5678", name="Jane Smith", display_name="Jane S", password="securePass123")
-<Arguments>
-organization-id:org5678;name:Jane Smith;display_name:Jane S;password:securePass123
 
 <DICT2>
 {
@@ -290,8 +288,6 @@ organization-id:org5678;name:Jane Smith;display_name:Jane S;password:securePass1
 I want to list the entitlements for my AWS account but retrieve the results in smaller pages of 5 items each.
 <New Model Answer>
 aws.mediaconnect.list_entitlements(page_size=5)
-<Arguments>
-page-size:5
 
 <DICT3>
 {
@@ -319,8 +315,6 @@ page-size:5
 Can you provide a Python function call to obtain the available power options for Lightsail container services and log the output, considering that we might want to automate a monthly check and get notified about possible updates or changes in the power options?
 <New Model Answer>
 aws.lightsail.get_container_service_powers()
-<Arguments>
-None
 """
 
 GCP_EXAMPLE = """

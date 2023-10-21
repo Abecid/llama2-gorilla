@@ -1,0 +1,158 @@
+[
+    {
+        "query": "I want to check if test@example.com is a valid email address.",
+        "model_answer": "requests.get(\"https://check-disposable-email.p.rapidapi.com/api/disposable\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"check-disposable-email.p.rapidapi.com\"}, params={\"email\": \"test@example.com\"})",
+        "original": {
+            "domain": "Commerce",
+            "framework": "RapidAPI",
+            "functionality": "123",
+            "api_name": "requests.get",
+            "api_call": "import requests\n\nurl = 'https://test-pg-prod.p.rapidapi.com/'\nquerystring = {}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"TO BE FILLED\",\n            \"X-RapidAPI-Host\": \"https://test-pg-prod.p.rapidapi.com/\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "api_arguments": [],
+            "python_environment_requirements": [
+                "requests"
+            ],
+            "example_code": "import requests\n\nurl = \"https://test-pg-prod.p.rapidapi.com/\"\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"test-pg-prod.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "metadata": [],
+            "api_name_original": "test pg prod",
+            "api_arguments_original": []
+        }
+    },
+    {
+        "query": "Can you find the UK postal addresses for the query \"567 Park Avenue\" and limit the results to 3?",
+        "model_answer": "requests.get(\"https://uk-postcode.p.rapidapi.com/search\", \n   headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"uk-postcode.p.rapidapi.com\"}, \n   params={\"q\": \"567 Park Avenue\", \"limit\": 3})",
+        "original": {
+            "domain": "Location",
+            "framework": "RapidAPI",
+            "functionality": "Integrate this API with your website's address form to quickly and accurately auto-fill UK postal addresses or find locations of addresses. This API contains a database of almost 1.7 million UK postcodes, along with address and location information.\n\nFor a simple demo, visit https://tomwimmenhove.com/ukpostcode/",
+            "api_name": "requests.get",
+            "api_call": "import requests\n\nurl = 'https://uk-postcode.p.rapidapi.com/search'\nquerystring = {\"q\": \"\", \"limit\": \"\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"TO BE FILLED\",\n            \"X-RapidAPI-Host\": \"https://uk-postcode.p.rapidapi.com/search\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "api_arguments": [
+                {
+                    "name": "q",
+                    "description": "The query string",
+                    "type": "STRING"
+                },
+                {
+                    "name": "limit",
+                    "description": "The maximum number of results of the query (May be artificially limited)",
+                    "type": "NUMBER"
+                }
+            ],
+            "python_environment_requirements": [
+                "requests"
+            ],
+            "example_code": "import requests\n\nurl = \"https://uk-postcode.p.rapidapi.com/search\"\nquerystring = {\"q\": \"Downing Street London\", \"limit\": \"10\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"uk-postcode.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "metadata": [],
+            "api_name_original": "UK Postcode",
+            "api_arguments_original": [
+                {
+                    "name": "q",
+                    "type": "STRING",
+                    "description": "The query string",
+                    "default": "Downing Street London"
+                },
+                {
+                    "name": "limit",
+                    "type": "NUMBER",
+                    "description": "The maximum number of results of the query (May be artificially limited)",
+                    "default": "10"
+                }
+            ]
+        }
+    },
+    {
+        "query": "I want to get the location data for the IP address 10.10.10.10.",
+        "model_answer": "requests.get(\"https://ip-to-location1.p.rapidapi.com/myip\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\":\"ip-to-location1.p.rapidapi.com\"}, params={\"ip\": \"10.10.10.10\"})",
+        "original": {
+            "domain": "Location",
+            "framework": "RapidAPI",
+            "functionality": "API returns location data such as country, city, latitude, longitude, timezone ...",
+            "api_name": "requests.get",
+            "api_call": "import requests\n\nurl = 'https://ip-to-location1.p.rapidapi.com/myip'\nquerystring = {\"ip\": \"\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"TO BE FILLED\",\n            \"X-RapidAPI-Host\": \"https://ip-to-location1.p.rapidapi.com/myip\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "api_arguments": [
+                {
+                    "name": "ip",
+                    "description": "If provide this query, API will return geo information for the given IP",
+                    "type": "STRING"
+                }
+            ],
+            "python_environment_requirements": [
+                "requests"
+            ],
+            "example_code": "import requests\n\nurl = \"https://ip-to-location1.p.rapidapi.com/myip\"\nquerystring = {\"ip\": \"8.30.234.123\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"ip-to-location1.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "metadata": [],
+            "api_name_original": "ip-to-location_v2",
+            "api_arguments_original": [
+                {
+                    "name": "ip",
+                    "type": "STRING",
+                    "description": "If provide this query, API will return geo information for the given IP\n",
+                    "default": "8.30.234.123"
+                }
+            ]
+        }
+    },
+    {
+        "query": "I want to get data from the YouTooSound API.",
+        "model_answer": "requests.get(\"https://youtoosound.p.rapidapi.com/\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"youtoosound.p.rapidapi.com\"})",
+        "original": {
+            "domain": "Social",
+            "framework": "RapidAPI",
+            "functionality": "YouTooSound",
+            "api_name": "requests.get",
+            "api_call": "import requests\n\nurl = 'https://youtoosound.p.rapidapi.com/'\nquerystring = {}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"TO BE FILLED\",\n            \"X-RapidAPI-Host\": \"https://youtoosound.p.rapidapi.com/\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "api_arguments": [],
+            "python_environment_requirements": [
+                "requests"
+            ],
+            "example_code": "import requests\n\nurl = \"https://youtoosound.p.rapidapi.com/\"\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"youtoosound.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n",
+            "metadata": [],
+            "api_name_original": "YouTooSound",
+            "api_arguments_original": []
+        }
+    },
+    {
+        "query": "Can you generate a catchy caption for my social media post about Samsung?",
+        "model_answer": "requests.get(\"https://social-media-caption.p.rapidapi.com/social-caption\", headers={\"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\", \"X-RapidAPI-Host\": \"social-media-caption.p.rapidapi.com\"}, params={\"name\": \"Samsung\", \"description\": \"Samsung is a multinational conglomerate that manufactures a wide range of electronic products, including smartphones, televisions, home appliances, and more.\"})",
+        "original": {
+            "domain": "Advertising",
+            "framework": "RapidAPI",
+            "functionality": "Generate catchy captions for social media",
+            "api_name": "requests.get",
+            "api_call": "import requests\n\nurl = 'https://social-media-caption.p.rapidapi.com/social-caption'\nquerystring = {\"name\": \"\", \"description\": \"\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"TO BE FILLED\",\n            \"X-RapidAPI-Host\": \"https://social-media-caption.p.rapidapi.com/social-caption\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "api_arguments": [
+                {
+                    "name": "name",
+                    "description": "",
+                    "type": "STRING"
+                },
+                {
+                    "name": "description",
+                    "description": "",
+                    "type": "STRING"
+                }
+            ],
+            "python_environment_requirements": [
+                "requests"
+            ],
+            "example_code": "import requests\n\nurl = \"https://social-media-caption.p.rapidapi.com/social-caption\"\nquerystring = {\"name\": \"Apple\", \"description\": \"Apple designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services.\"}\n\nheaders = {\n            \"X-RapidAPI-Key\": \"SIGN-UP-FOR-KEY\",\n            \"X-RapidAPI-Host\": \"social-media-caption.p.rapidapi.com\"\n        }\n\nresponse = requests.get(url, headers=headers, params=querystring)\nprint(response.json())\n",
+            "metadata": [],
+            "api_name_original": "Social media caption",
+            "api_arguments_original": [
+                {
+                    "name": "name",
+                    "type": "STRING",
+                    "description": "",
+                    "default": "Apple"
+                },
+                {
+                    "name": "description",
+                    "type": "STRING",
+                    "description": "",
+                    "default": "Apple designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a variety of related services."
+                }
+            ]
+        }
+    }
+]
