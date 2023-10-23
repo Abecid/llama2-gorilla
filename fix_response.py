@@ -4,6 +4,7 @@ from tqdm import tqdm
 from datetime import datetime
 import re
 import ast
+import os
 
 from prompts import template
 from prompts import example as prompt_examples
@@ -15,6 +16,13 @@ linux = "openai_linux-2023Jun13.json"
 rapidAPI = "rapidAPI-api_09_30_gpt_3_5_turbo.json"
 aws = "aws-cli-2023_09_29_gpt_3_5_turbo.json"
 output_aws = "aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned.json"
+
+filenames = ['aws-cli-2023_09_29_gpt_3_5_turbo_10_08_00_00_cleaned_10_12_20_48_additional_fixed_fixed.json',
+             'openai_gcloud-2023Jun13_fixed_10_19_fixed_fixed.json',
+             'openai_github-2023Jun13_fixed_10_19_fixed_fixed.json',
+             'rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed_fixedArguments_fixed.json',
+             'rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_fixed_fixed.json'
+             ]
 
 inputs = [conda, linux]
 
@@ -812,6 +820,39 @@ def fix_file(data, clean_input_name):
     with open(f'output/{clean_input_name}_{date_string}_cleaned.json', 'w') as jsonfile:
         json.dump(output_data, jsonfile, indent=4)
 
+def abstract_fix(file_path):
+    output_data = []
+    
+    data = json.load(open(file_path))
+    for index, json_obj in enumerate(tqdm(data)):
+        try:    
+            ast.parse(json_obj['model_answer'])
+            
+            if json_obj['original'].get('api_arguments_original', False) is False:
+                json_obj['original']['api_arguments_original'] = json_obj['original']['api_arguments']
+            
+            arguments = fix_arguments(json_obj)
+            json_obj['original']['api_arguments'] = arguments
+            
+            json_obj['original']['api_name'] = fix_api_name(json_obj)
+            
+            output_data.append(json_obj)
+        except Exception as e:
+            print(f"Error: {e}")
+            continue
+    
+    dirs = file_path.split("/")
+    dirs.insert(-1, "original")
+    new_input_filepath = "/".join(dirs)
+    # Create the directory if it doesn't exist
+    new_dir_path = "/".join(dirs[:-1])
+    if not os.path.exists(new_dir_path):
+        os.makedirs(new_dir_path)
+    # new_input_filepath = input_filepath.replace(".json", "_additional.json")
+    with open(f'{new_input_filepath}', 'w') as jsonfile:
+        json.dump(output_data, jsonfile, indent=4)
+    
+
 def main():
     # input_file = rapidAPI
     # input_file = aws
@@ -835,7 +876,7 @@ def main():
                'output/dataset1/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed_fixedArguments_fixed.json',
                'output/dataset1/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_fixed_fixed.json']
     for dataset in dataset1:
-        create_additional_examples(dataset)
+        abstract_fix(dataset)
     
     latset_rapid = "output/rapidAPI-api_09_30_gpt_3_5_turbo_10_06_18_53_cleaned_additional_fixed.json"
     # fix_rapidapi_arguments(latset_rapid)
@@ -852,7 +893,8 @@ def main():
     
     gcloud = "output/openai_gcloud-2023Jun13_fixed_10_19_fixed.json"
     github = "output/openai_github-2023Jun13_fixed_10_19_fixed.json"
-    fix_model_names(gcloud)
+    # fix_model_names(gcloud)
+    
     
 
 if __name__ == "__main__":
